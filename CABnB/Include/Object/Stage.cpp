@@ -192,28 +192,37 @@ CStage * CStage::Clone()
 }
 
 void CStage::Save(FILE * pFile)
-{/*
-	CStaticObj::Save(pFile);
+{
+	CObj::Save(pFile);
 
+	fwrite(&m_iTileSize, 4, 1, pFile);
 	fwrite(&m_iTileNumX, 4, 1, pFile);
 	fwrite(&m_iTileNumY, 4, 1, pFile);
-	fwrite(&m_iTileSizeX, 4, 1, pFile);
-	fwrite(&m_iTileSizeY, 4, 1, pFile);
+	fwrite(&m_iBlockSize, 4, 1, pFile);
+	fwrite(&m_iBlockNumX, 4, 1, pFile);
+	fwrite(&m_iBlockNumY, 4, 1, pFile);
 
 	for (size_t i = 0; i < m_vecTile.size(); ++i)
 	{
 		m_vecTile[i]->Save(pFile);
-	}*/
+	}
+
+	for (size_t i = 0; i < m_vecBlock.size(); ++i)
+	{
+		m_vecBlock[i]->Save(pFile);
+	}
 }
 
 void CStage::Load(FILE * pFile)
-{/*
-	CStaticObj::Load(pFile);
+{
+	CObj::Load(pFile);
 
+	fread(&m_iTileSize, 4, 1, pFile);
 	fread(&m_iTileNumX, 4, 1, pFile);
 	fread(&m_iTileNumY, 4, 1, pFile);
-	fread(&m_iTileSizeX, 4, 1, pFile);
-	fread(&m_iTileSizeY, 4, 1, pFile);
+	fread(&m_iBlockSize, 4, 1, pFile);
+	fread(&m_iBlockNumX, 4, 1, pFile);
+	fread(&m_iBlockNumY, 4, 1, pFile);
 
 	ClearTile();
 
@@ -224,7 +233,18 @@ void CStage::Load(FILE * pFile)
 		pTile->Load(pFile);
 
 		m_vecTile.push_back(pTile);
-	}*/
+	}
+
+	ClearBlock();
+
+	for (int i = 0; i < m_iBlockNumX * m_iBlockNumY; ++i)
+	{
+		CBlock* pBlock = CObj::CreateObj<CBlock>("Block");
+
+		pBlock->Load(pFile);
+
+		m_vecBlock.push_back(pBlock);
+	}
 }
 
 int CStage::GetTileIndex(const POSITION & tPos)

@@ -374,6 +374,7 @@ void CObj::SaveFromPath(const char * pFileName, const string & strPathKey)
 	string strFullPath;
 	if (pPath)
 		strFullPath = pPath;
+	strFullPath += "Map/";
 	strFullPath += pFileName;
 
 	SaveFromFullPath(strFullPath.c_str());
@@ -479,6 +480,7 @@ void CObj::LoadFromPath(const char * pFileName, const string & strPathKey)
 	string strFullPath;
 	if (pPath)
 		strFullPath = pPath;
+	strFullPath += "/Map";
 	strFullPath += pFileName;
 
 	LoadFromFullPath(strFullPath.c_str());

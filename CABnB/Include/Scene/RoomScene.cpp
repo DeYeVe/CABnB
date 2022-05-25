@@ -39,6 +39,7 @@ bool CRoomScene::Init()
 	pStartBtn->SetSize(191, 55);
 	pStartBtn->SetTexture("StartButton", L"UI/StartButton.bmp");
 	pStartBtn->SetColorKey(255, 0, 255);
+	pStartBtn->SetHasOffset(true);
 
 	CColliderRect* pRC = (CColliderRect*)pStartBtn->GetCollider("ButtonBody");
 
@@ -58,6 +59,7 @@ bool CRoomScene::Init()
 	pMapSelectBtn->SetSize(123, 48);
 	pMapSelectBtn->SetTexture("MapSelectButton", L"UI/MapSelectButton.bmp");
 	pMapSelectBtn->SetColorKey(255, 0, 255);
+	pMapSelectBtn->SetHasOffset(true);
 
 	pRC = (CColliderRect*)pMapSelectBtn->GetCollider("ButtonBody");
 
@@ -94,7 +96,7 @@ void CRoomScene::MapSelectButtonCallback(float fTime, const string& strTag)
 	OFN.lStructSize = sizeof(OPENFILENAME);
 	OFN.hwndOwner = WINDOWHANDLE;
 	OFN.lpstrInitialDir = mapPath;
-	OFN.lpstrFilter = TEXT("ALL FILE(*.*)\0*.*\0");
+	OFN.lpstrFilter = TEXT("Map(*.map)\0*.map\0ALL FILE(*.*)\0*.*\0");
 	OFN.lpstrFile = lpstrFile;
 	OFN.nMaxFile = MAX_PATH;
 	if (GetOpenFileName(&OFN) != 0)
@@ -108,6 +110,9 @@ void CRoomScene::MapSelectButtonCallback(float fTime, const string& strTag)
 		{
 			MessageBox(WINDOWHANDLE, L"¸Ê ¼±ÅÃ ¼º°ø", L"Open", MB_OK);
 			CloseHandle(hFile);
+
+			size_t i;
+			wcstombs_s(&i, m_strFileName, MAX_PATH, lpstrFile, wcslen(lpstrFile) + 1);
 		}
 	}
 

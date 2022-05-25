@@ -10,6 +10,15 @@ public:
 	CRoomScene();
 	~CRoomScene();
 
+private:
+	char	m_strFileName[MAX_PATH] = {};
+
+public:
+	const char * GetFileName()
+	{
+		return m_strFileName;
+	}
+
 public:
 	virtual bool Init();
 

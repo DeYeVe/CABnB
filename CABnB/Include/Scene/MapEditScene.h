@@ -25,6 +25,8 @@ public:
 	virtual void Input(float fDeltaTime);
 
 public:
+	void ExitButtonCallback(float fTime, const string& strTag);
+	void SaveButtonCallback(float fTime, const string& strTag);
 	void TileButtonCallback(float fTime, const string& strTag);
 	void BlockButtonCallback(float fTime, const string& strTag);
 	static INT_PTR CALLBACK DlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

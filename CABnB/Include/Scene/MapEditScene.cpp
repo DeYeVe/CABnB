@@ -67,8 +67,45 @@ bool CMapEditScene::Init()
 	GET_SINGLE(CInput)->AddKey("Load", 'O', VK_CONTROL);
 
 	// Buttons
+	// Exit Button
+	CUIButton*	pExitBtn = CObj::CreateObj<CUIButton>("ExitButton", pLayer);
+
+	pExitBtn->SetPos(647, 561);
+	pExitBtn->SetSize(140, 32);
+	pExitBtn->SetTexture("ExitButton", L"UI/ExitButton.bmp");
+	pExitBtn->SetColorKey(255, 0, 255);
+	pExitBtn->SetHasOffset(true);
+
+	CColliderRect* pRC = (CColliderRect*)pExitBtn->GetCollider("ButtonBody");
+
+	pRC->SetRect(0.f, 0.f, 140, 32);
+
+	SAFE_RELEASE(pRC);
+
+	pExitBtn->SetCallback(this, &CMapEditScene::ExitButtonCallback);
+
+	SAFE_RELEASE(pExitBtn);
+
+	// Save Button
+	CUIButton*	pSaveBtn = CObj::CreateObj<CUIButton>("SaveButton", pLayer);
+
+	pSaveBtn->SetPos(700, 500);
+	pSaveBtn->SetSize(85, 44);
+	pSaveBtn->SetTexture("SaveButton", L"UI/SaveButton.bmp");
+	pSaveBtn->SetColorKey(255, 0, 255);
+	pSaveBtn->SetHasOffset(true);
+
+	pRC = (CColliderRect*)pSaveBtn->GetCollider("ButtonBody");
+
+	pRC->SetRect(0.f, 0.f, 85, 44);
+
+	SAFE_RELEASE(pRC);
+
+	pSaveBtn->SetCallback(this, &CMapEditScene::SaveButtonCallback);
+
+	SAFE_RELEASE(pExitBtn);
+
 	// Tile
-	//
 	for (int i = 1; i <= 7; ++i)
 	{
 		CUIButton*	pTileBtn = CObj::CreateObj<CUIButton>("TownGround" + to_string(i), pLayer);
@@ -106,7 +143,7 @@ bool CMapEditScene::Init()
 	pBlockBtn->SetTexture("BlankBlock", L"Tile/BlankBlock.bmp");
 	pBlockBtn->SetColorKey(1.0f, 1.0f, 1.0f);
 
-	CColliderRect* pRC = (CColliderRect*)pBlockBtn->GetCollider("ButtonBody");
+	pRC = (CColliderRect*)pBlockBtn->GetCollider("ButtonBody");
 
 	pRC->SetRect(0.f, 0.f, 40, 40);
 
@@ -134,48 +171,10 @@ bool CMapEditScene::Init()
 	SAFE_RELEASE(pRC);
 	SAFE_RELEASE(pBlockBtn);
 
-	// TownBlockRed
-	pBlockBtn = CObj::CreateObj<CUIButton>("TownBlockRed", pLayer);
-
-	pBlockBtn->SetPos(649 + 48 * 2, 141 + 60 * 3);
-	pBlockBtn->SetSize(40, 44);
-	pBlockBtn->SetTexture("TownBlockRedCK", L"Tile/TownBlockRed.bmp");
-	pBlockBtn->SetColorKey(200, 200, 200);
-	pBlockBtn->SetTexture("TownBlockRed", L"Tile/TownBlockRed.bmp");
-	pBlockBtn->SetColorKey(1.0f, 1.0f, 1.0f);
-
-	pRC = (CColliderRect*)pBlockBtn->GetCollider("ButtonBody");
-
-	pRC->SetRect(0.f, 0.f, 40, 44);
-
-	pBlockBtn->SetCallback(this, &CMapEditScene::BlockButtonCallback);
-
-	SAFE_RELEASE(pRC);
-	SAFE_RELEASE(pBlockBtn);
-
-	// TownBlockYellow
-	pBlockBtn = CObj::CreateObj<CUIButton>("TownBlockYellow", pLayer);
-
-	pBlockBtn->SetPos(649, 141 + 60 * 4);
-	pBlockBtn->SetSize(40, 44);
-	pBlockBtn->SetTexture("TownBlockYellowCK", L"Tile/TownBlockYellow.bmp");
-	pBlockBtn->SetColorKey(200, 200, 200);
-	pBlockBtn->SetTexture("TownBlockYellow", L"Tile/TownBlockYellow.bmp");
-	pBlockBtn->SetColorKey(1.0f, 1.0f, 1.0f);
-
-	pRC = (CColliderRect*)pBlockBtn->GetCollider("ButtonBody");
-
-	pRC->SetRect(0.f, 0.f, 40, 44);
-
-	pBlockBtn->SetCallback(this, &CMapEditScene::BlockButtonCallback);
-
-	SAFE_RELEASE(pRC);
-	SAFE_RELEASE(pBlockBtn);
-
 	// TownBox
 	pBlockBtn = CObj::CreateObj<CUIButton>("TownBox", pLayer);
 
-	pBlockBtn->SetPos(649 + 48, 141 + 60 * 4);
+	pBlockBtn->SetPos(649 + 48 * 2, 141 + 60 * 3);
 	pBlockBtn->SetSize(40, 44);
 	pBlockBtn->SetTexture("TownBoxCK", L"Tile/TownBox.bmp");
 	pBlockBtn->SetColorKey(200, 200, 200);
@@ -191,29 +190,10 @@ bool CMapEditScene::Init()
 	SAFE_RELEASE(pRC);
 	SAFE_RELEASE(pBlockBtn);
 
-	// TownBush
-	pBlockBtn = CObj::CreateObj<CUIButton>("TownBush", pLayer);
-
-	pBlockBtn->SetPos(649 + 48 * 2, 128 + 60 * 4);
-	pBlockBtn->SetSize(40, 57);
-	pBlockBtn->SetTexture("TownBushCK", L"Tile/TownBush.bmp");
-	pBlockBtn->SetColorKey(200, 200, 200);
-	pBlockBtn->SetTexture("TownBush", L"Tile/TownBush.bmp");
-	pBlockBtn->SetColorKey(1.0f, 1.0f, 1.0f);
-
-	pRC = (CColliderRect*)pBlockBtn->GetCollider("ButtonBody");
-
-	pRC->SetRect(0.f, 0.f, 40, 57);
-
-	pBlockBtn->SetCallback(this, &CMapEditScene::BlockButtonCallback);
-
-	SAFE_RELEASE(pRC);
-	SAFE_RELEASE(pBlockBtn);
-
 	// TownHouseBlue
 	pBlockBtn = CObj::CreateObj<CUIButton>("TownHouseBlue", pLayer);
 
-	pBlockBtn->SetPos(649, 128 + 60 * 5);
+	pBlockBtn->SetPos(649, 128 + 60 * 4);
 	pBlockBtn->SetSize(40, 57);
 	pBlockBtn->SetTexture("TownHouseBlueCK", L"Tile/TownHouseBlue.bmp");
 	pBlockBtn->SetColorKey(200, 200, 200);
@@ -232,7 +212,7 @@ bool CMapEditScene::Init()
 	// TownHouseRed
 	pBlockBtn = CObj::CreateObj<CUIButton>("TownHouseRed", pLayer);
 
-	pBlockBtn->SetPos(649 + 48, 128 + 60 * 5);
+	pBlockBtn->SetPos(649 + 48, 128 + 60 * 4);
 	pBlockBtn->SetSize(40, 57);
 	pBlockBtn->SetTexture("TownHouseRedCK", L"Tile/TownHouseRed.bmp");
 	pBlockBtn->SetColorKey(200, 200, 200);
@@ -251,7 +231,7 @@ bool CMapEditScene::Init()
 	// TownHouseYellow
 	pBlockBtn = CObj::CreateObj<CUIButton>("TownHouseYellow", pLayer);
 
-	pBlockBtn->SetPos(649, 128 + 60 * 6);
+	pBlockBtn->SetPos(649 + 48 * 2, 128 + 60 * 4);
 	pBlockBtn->SetSize(40, 57);
 	pBlockBtn->SetTexture("TownHouseYellowCK", L"Tile/TownHouseYellow.bmp");
 	pBlockBtn->SetColorKey(200, 200, 200);
@@ -267,10 +247,67 @@ bool CMapEditScene::Init()
 	SAFE_RELEASE(pRC);
 	SAFE_RELEASE(pBlockBtn);
 
+	// TownBlockRed
+	pBlockBtn = CObj::CreateObj<CUIButton>("TownBlockRed", pLayer);
+
+	pBlockBtn->SetPos(649, 128 + 60 * 5);
+	pBlockBtn->SetSize(40, 44);
+	pBlockBtn->SetTexture("TownBlockRedCK", L"Tile/TownBlockRed.bmp");
+	pBlockBtn->SetColorKey(200, 200, 200);
+	pBlockBtn->SetTexture("TownBlockRed", L"Tile/TownBlockRed.bmp");
+	pBlockBtn->SetColorKey(1.0f, 1.0f, 1.0f);
+
+	pRC = (CColliderRect*)pBlockBtn->GetCollider("ButtonBody");
+
+	pRC->SetRect(0.f, 0.f, 40, 44);
+
+	pBlockBtn->SetCallback(this, &CMapEditScene::BlockButtonCallback);
+
+	SAFE_RELEASE(pRC);
+	SAFE_RELEASE(pBlockBtn);
+
+	// TownBlockYellow
+	pBlockBtn = CObj::CreateObj<CUIButton>("TownBlockYellow", pLayer);
+
+	pBlockBtn->SetPos(649 + 48, 128 + 60 * 5);
+	pBlockBtn->SetSize(40, 44);
+	pBlockBtn->SetTexture("TownBlockYellowCK", L"Tile/TownBlockYellow.bmp");
+	pBlockBtn->SetColorKey(200, 200, 200);
+	pBlockBtn->SetTexture("TownBlockYellow", L"Tile/TownBlockYellow.bmp");
+	pBlockBtn->SetColorKey(1.0f, 1.0f, 1.0f);
+
+	pRC = (CColliderRect*)pBlockBtn->GetCollider("ButtonBody");
+
+	pRC->SetRect(0.f, 0.f, 40, 44);
+
+	pBlockBtn->SetCallback(this, &CMapEditScene::BlockButtonCallback);
+
+	SAFE_RELEASE(pRC);
+	SAFE_RELEASE(pBlockBtn);
+	// TownBush
+	pBlockBtn = CObj::CreateObj<CUIButton>("TownBush", pLayer);
+
+	pBlockBtn->SetPos(649 + 48 * 2, 128 + 60 * 5);
+	pBlockBtn->SetSize(40, 57);
+	pBlockBtn->SetTexture("TownBushCK", L"Tile/TownBush.bmp");
+	pBlockBtn->SetColorKey(200, 200, 200);
+	pBlockBtn->SetTexture("TownBush", L"Tile/TownBush.bmp");
+	pBlockBtn->SetColorKey(1.0f, 1.0f, 1.0f);
+
+	pRC = (CColliderRect*)pBlockBtn->GetCollider("ButtonBody");
+
+	pRC->SetRect(0.f, 0.f, 40, 57);
+
+	pBlockBtn->SetCallback(this, &CMapEditScene::BlockButtonCallback);
+
+	SAFE_RELEASE(pRC);
+	SAFE_RELEASE(pBlockBtn);
+
+
 	// TownTree
 	pBlockBtn = CObj::CreateObj<CUIButton>("TownTree", pLayer);
 
-	pBlockBtn->SetPos(649 + 48 * 2, 118 + 60 * 6);
+	pBlockBtn->SetPos(649, 118 + 60 * 6);
 	pBlockBtn->SetSize(40, 67);
 	pBlockBtn->SetTexture("TownTreeCK", L"Tile/TownTree.bmp");
 	pBlockBtn->SetColorKey(200, 200, 200);
@@ -307,6 +344,26 @@ void CMapEditScene::Input(float fDeltaTime)
 				m_pSelectedBlock->GetBlockType(), m_pSelectedBlock->GetSize().y);
 		}
 	}
+}
+
+void CMapEditScene::ExitButtonCallback(float fTime, const string & strTag)
+{
+	GET_SINGLE(CSceneManager)->CreateScene<CStartScene>(SC_NEXT);
+}
+
+void CMapEditScene::SaveButtonCallback(float fTime, const string & strTag)
+{
+	ShowCursor(TRUE);
+	DialogBox(WINDOWINSTANCE, MAKEINTRESOURCE(IDD_DIALOG1),
+		WINDOWHANDLE, CMapEditScene::DlgProc);
+
+	ShowCursor(FALSE);
+
+	char	strFileName[MAX_PATH] = {};
+	WideCharToMultiByte(CP_ACP, 0, m_strText, -1, strFileName,
+		lstrlen(m_strText), 0, 0);
+
+	m_pStage->SaveFromPath(strFileName);
 }
 
 void CMapEditScene::TileButtonCallback(float fTime, const string& strTag)
@@ -393,23 +450,22 @@ void CMapEditScene::BlockButtonCallback(float fTime, const string& strTag)
 
 INT_PTR CMapEditScene::DlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-//	switch (message)
-//	{
-//	case WM_INITDIALOG:
-//		return TRUE;
-//	case WM_COMMAND:
-//		switch (LOWORD(wParam))
-//		{
-//		case IDOK:
-//			// Edit Box에서 문자열 얻어온다.
-//			memset(m_strText, 0, sizeof(wchar_t) * MAX_PATH);
-//			GetDlgItemText(hWnd, IDC_EDIT1, m_strText, MAX_PATH);
-//		case IDCANCEL:
-//			EndDialog(hWnd, IDOK);
-//			return TRUE;
-//		}
-//		return FALSE;
-//	}
-//
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		return TRUE;
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case IDOK:
+			memset(m_strText, 0, sizeof(wchar_t) * MAX_PATH);
+			GetDlgItemText(hWnd, IDC_EDIT1, m_strText, MAX_PATH);
+		case IDCANCEL:
+			EndDialog(hWnd, IDOK);
+			return TRUE;
+		}
+		return FALSE;
+	}
+
 	return FALSE();
 }
