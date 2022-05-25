@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="01. Core">
+      <UniqueIdentifier>{16f26c35-bde0-45d6-a3f7-4a7ffe001be1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Core\01. Timer">
+      <UniqueIdentifier>{f822fa86-91a9-4a80-b4f9-082d20e65290}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene">
+      <UniqueIdentifier>{22c9697e-b96b-4e6e-89b2-631ff48cb6ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\01. Layer">
+      <UniqueIdentifier>{df6fdc50-15ac-4678-b28a-71793609bce0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object">
+      <UniqueIdentifier>{5645be8d-0bef-43b7-af9a-4b90714179e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\02. Scenes">
+      <UniqueIdentifier>{e6c3d382-b280-45f5-89c8-5269a9527ded}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\01. Player">
+      <UniqueIdentifier>{d143b690-cb2c-4d53-92b9-9efff37625ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\02. Bubble">
+      <UniqueIdentifier>{acd58948-c04a-4097-a20d-d1c24d3c8208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\03. Item">
+      <UniqueIdentifier>{a793f2f8-8f4c-4f5a-b3c5-decf0c075c0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\04. Block">
+      <UniqueIdentifier>{94b699d4-b0c3-4178-8841-441caf8facff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\05. Tile">
+      <UniqueIdentifier>{9f3edb52-4f8d-47f6-a38c-97897eccb017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Resources">
+      <UniqueIdentifier>{91b2f48d-4e9e-4f6f-a14a-30f318b4d36e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Collider">
+      <UniqueIdentifier>{51c8035d-79b9-4635-b977-ce1e438c2169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Animation">
+      <UniqueIdentifier>{4d4b0155-1984-4db4-9c87-319080b2295c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Core\05. Math">
+      <UniqueIdentifier>{8c7b87df-56d8-48c9-8630-b84b859f1186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Core\02. Path">
+      <UniqueIdentifier>{626e8752-7f24-4684-a6db-992b84472f22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Core\03. Camera">
+      <UniqueIdentifier>{d5a013e6-dde5-4206-ab41-30538d4fd0d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Core\04. Input">
+      <UniqueIdentifier>{c47a3681-5142-48fb-a125-259ae13b801b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\07. UI">
+      <UniqueIdentifier>{a609912f-2450-4024-984f-2a0edb835a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\06. Stage">
+      <UniqueIdentifier>{b2e3d640-2e66-480a-b277-658f59a8e256}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Timer.cpp">
+      <Filter>01. Core\01. Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Core.cpp">
+      <Filter>01. Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Ref.cpp">
+      <Filter>01. Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Layer.cpp">
+      <Filter>02. Scene\01. Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Obj.cpp">
+      <Filter>03. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider\Collider.cpp">
+      <Filter>05. Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Math.cpp">
+      <Filter>01. Core\05. Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene.cpp">
+      <Filter>02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneManager.cpp">
+      <Filter>02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\StartScene.cpp">
+      <Filter>02. Scene\02. Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\ResourcesManager.cpp">
+      <Filter>04. Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\Texture.cpp">
+      <Filter>04. Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider\ColliderPoint.cpp">
+      <Filter>05. Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider\ColliderRect.cpp">
+      <Filter>05. Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider\CollisionManager.cpp">
+      <Filter>05. Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\PathManager.cpp">
+      <Filter>01. Core\02. Path</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Camera.cpp">
+      <Filter>01. Core\03. Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\Animation.cpp">
+      <Filter>06. Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UI.cpp">
+      <Filter>03. Object\07. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UIButton.cpp">
+      <Filter>03. Object\07. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UIPanel.cpp">
+      <Filter>03. Object\07. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Input.cpp">
+      <Filter>01. Core\04. Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Mouse.cpp">
+      <Filter>03. Object\07. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Player.cpp">
+      <Filter>03. Object\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\RoomScene.cpp">
+      <Filter>02. Scene\02. Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MapEditScene.cpp">
+      <Filter>02. Scene\02. Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Tile.cpp">
+      <Filter>03. Object\05. Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Block.cpp">
+      <Filter>03. Object\04. Block</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Stage.cpp">
+      <Filter>03. Object\06. Stage</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Flag.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Timer.h">
+      <Filter>01. Core\01. Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Core.h">
+      <Filter>01. Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Ref.h">
+      <Filter>01. Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Layer.h">
+      <Filter>02. Scene\01. Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Obj.h">
+      <Filter>03. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider\Collider.h">
+      <Filter>05. Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Math.h">
+      <Filter>01. Core\05. Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene.h">
+      <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\StartScene.h">
+      <Filter>02. Scene\02. Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ResourcesManager.h">
+      <Filter>04. Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Texture.h">
+      <Filter>04. Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider\ColliderPoint.h">
+      <Filter>05. Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider\ColliderRect.h">
+      <Filter>05. Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider\CollisionManager.h">
+      <Filter>05. Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\PathManager.h">
+      <Filter>01. Core\02. Path</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Camera.h">
+      <Filter>01. Core\03. Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\Animation.h">
+      <Filter>06. Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UI.h">
+      <Filter>03. Object\07. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UIButton.h">
+      <Filter>03. Object\07. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UIPanel.h">
+      <Filter>03. Object\07. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Input.h">
+      <Filter>01. Core\04. Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Mouse.h">
+      <Filter>03. Object\07. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Player.h">
+      <Filter>03. Object\01. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\RoomScene.h">
+      <Filter>02. Scene\02. Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MapEditScene.h">
+      <Filter>02. Scene\02. Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Tile.h">
+      <Filter>03. Object\05. Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Block.h">
+      <Filter>03. Object\04. Block</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Stage.h">
+      <Filter>03. Object\06. Stage</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CABnB.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
