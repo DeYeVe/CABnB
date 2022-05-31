@@ -1,6 +1,7 @@
 #include "Scene.h"	
 #include "Layer.h"
 #include "../Object/Obj.h"
+#include "../Object/UIPanel.h"
 
 unordered_map<string, CObj*> CScene::m_mapPrototype[SC_END];
 
@@ -8,8 +9,8 @@ CScene::CScene()
 {
 	CLayer*	pLayer = CreateLayer("UI", INT_MAX - 2);
 	pLayer = CreateLayer("HUD", INT_MAX);
-	pLayer = CreateLayer("Default", 1);
-	pLayer = CreateLayer("Stage", INT_MAX - 1);
+	pLayer = CreateLayer("Default", 2);
+	pLayer = CreateLayer("Stage", 1);
 	m_eSceneType = SC_CURRENT;
 }
 
@@ -223,6 +224,25 @@ void CScene::ChangeProtoType()
 	ErasePrototype(SC_CURRENT);
 	m_mapPrototype[SC_CURRENT] = m_mapPrototype[SC_NEXT];
 	m_mapPrototype[SC_NEXT].clear();
+}
+
+void CScene::FadeIn()
+{/*
+	CLayer* pLayer = FindLayer("UI");
+
+	CUIPanel*	pBackPanel = CObj::CreateObj<CUIPanel>("BackPanel", pLayer);
+
+	pBackPanel = CObj::CreateObj<CUIPanel>("BackPanel", pLayer);
+
+	pBackPanel->SetSize(GETRESOLUTION.iW, GETRESOLUTION.iH);
+	pBackPanel->SetTexture("Fade", L"bg/Fade5.bmp");
+	pBackPanel->SetColorKey(255, 255, 255);
+
+	SAFE_RELEASE(pBackPanel);*/
+}
+
+void CScene::FadeOut()
+{
 }
 
 bool CScene::LayerSort(CLayer * pL1, CLayer * pL2)

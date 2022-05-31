@@ -173,6 +173,7 @@
     <ClCompile Include="Object\UIPanel.cpp" />
     <ClCompile Include="Resources\ResourcesManager.cpp" />
     <ClCompile Include="Resources\Texture.cpp" />
+    <ClCompile Include="Scene\InGameScene.cpp" />
     <ClCompile Include="Scene\MapEditScene.cpp" />
     <ClCompile Include="Scene\RoomScene.cpp" />
     <ClCompile Include="Scene\Layer.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resources\ResourcesManager.h" />
     <ClInclude Include="Resources\Texture.h" />
+    <ClInclude Include="Scene\InGameScene.h" />
     <ClInclude Include="Scene\MapEditScene.h" />
     <ClInclude Include="Scene\RoomScene.h" />
     <ClInclude Include="Scene\Layer.h" />

@@ -28,6 +28,23 @@ bool CResourcesManager::Init(HINSTANCE hInst, HDC hDC)
 
 	// 백버퍼를 불러온다.
 	m_pBackBuffer = LoadTexture("BackBuffer", L"BackBuffer.bmp");
+	LoadTexture("BlankBlock", L"Tile/BlankBlock.bmp");
+	LoadTexture("BlankTile", L"Tile/BlankTile.bmp");
+	LoadTexture("TownGround1", L"Tile/TownGround1.bmp");
+	LoadTexture("TownGround2", L"Tile/TownGround2.bmp");
+	LoadTexture("TownGround3", L"Tile/TownGround3.bmp");
+	LoadTexture("TownGround4", L"Tile/TownGround4.bmp");
+	LoadTexture("TownGround5", L"Tile/TownGround5.bmp");
+	LoadTexture("TownGround6", L"Tile/TownGround6.bmp");
+	LoadTexture("TownGround7", L"Tile/TownGround7.bmp");
+	LoadTexture("TownBox", L"Tile/TownBox.bmp");
+	LoadTexture("TownHouseBlue", L"Tile/TownHouseBlue.bmp");
+	LoadTexture("TownHouseRed", L"Tile/TownHouseRed.bmp");
+	LoadTexture("TownHouseYellow", L"Tile/TownHouseYellow.bmp");
+	LoadTexture("TownBlockRed", L"Tile/TownBlockRed.bmp");
+	LoadTexture("TownBlockYellow", L"Tile/TownBlockYellow.bmp");
+	LoadTexture("TownBush", L"Tile/TownBush.bmp");
+	LoadTexture("TownTree", L"Tile/TownTree.bmp");
 
 	return true;
 }

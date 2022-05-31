@@ -8,7 +8,7 @@ protected:
 
 protected:
 	CScene();
-	virtual ~CScene() = 0; // 부모클래스로 쓸거면 일단 virtual 붙여두는 습관
+	virtual ~CScene() = 0;
 
 private:
 	static unordered_map<string, class CObj*> m_mapPrototype[SC_END];
@@ -69,5 +69,7 @@ public:
 
 	static CObj* FindPrototype(const string& strKey, SCENE_CREATE sc);
 	static void ChangeProtoType();
+	void FadeIn();
+	void FadeOut();
 };
 

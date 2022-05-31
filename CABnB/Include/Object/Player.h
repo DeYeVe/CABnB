@@ -40,6 +40,8 @@ public:
 	void SetRange(bool iRange)
 	{
 		m_iRange = iRange;
+		if (m_iRange > 8)
+			m_iRange = 8;
 	}
 
 public:
@@ -76,5 +78,13 @@ public:
 	virtual void Render(HDC hDC, float fDeltaTime);
 	virtual CPlayer* Clone();
 
+private:
+	wstring StringToWstring(string str)
+	{
+		wstring wstr;
+		wstr = wstring(str.begin(), str.end());
+
+		return wstr;
+	}
 };
 

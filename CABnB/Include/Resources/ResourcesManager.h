@@ -10,6 +10,19 @@ private:
 	HDC				m_hDC;	
 	class CTexture* m_pBackBuffer;
 
+private:
+	string	m_strFilePath;
+
+public:
+	string GetFileName()
+	{
+		return m_strFilePath;
+	}
+	void SetFileName(string strFileName)
+	{
+		m_strFilePath = strFileName;
+	}
+
 public:
 	class CTexture* GetBackBuffer() const;
 

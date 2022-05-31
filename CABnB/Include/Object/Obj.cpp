@@ -442,19 +442,12 @@ void CObj::Save(FILE * pFile)
 
 	list<CCollider*>::iterator iter;
 	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
-	/*
+	
 	for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter)
 	{
 		COLLIDER_TYPE eType = (*iter)->GetColliderType();
 		fwrite(&eType, 4, 1, pFile);
 		(*iter)->Save(pFile);
-	}
-	*/
-	for (CCollider* col : m_ColliderList)
-	{
-		COLLIDER_TYPE eType = col->GetColliderType();
-		fwrite(&eType, 4, 1, pFile);
-		(col)->Save(pFile);
 	}
 
 	// 애니메이션 저장

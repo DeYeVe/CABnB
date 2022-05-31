@@ -7,8 +7,8 @@
 #include "../Core/Core.h"
 #include "SceneManager.h"
 #include "../Core/PathManager.h"
-//#include "InGameScene.h"
-//#include "MapEditScene.h"
+#include "InGameScene.h"
+#include "../Resources/ResourcesManager.h"
 
 CRoomScene::CRoomScene()
 {
@@ -76,7 +76,7 @@ bool CRoomScene::Init()
 
 void CRoomScene::RoomStartButtonCallback(float fTime, const string& strTag)
 {
-	//GET_SINGLE(CSceneManager)->CreateScene<CInGameScene>(SC_NEXT);
+	GET_SINGLE(CSceneManager)->CreateScene<CInGameScene>(SC_NEXT);
 }
 
 void CRoomScene::MapSelectButtonCallback(float fTime, const string& strTag)
@@ -98,7 +98,7 @@ void CRoomScene::MapSelectButtonCallback(float fTime, const string& strTag)
 	OFN.lpstrInitialDir = mapPath;
 	OFN.lpstrFilter = TEXT("Map(*.map)\0*.map\0ALL FILE(*.*)\0*.*\0");
 	OFN.lpstrFile = lpstrFile;
-	OFN.nMaxFile = MAX_PATH;
+	OFN.nMaxFile = MAX_PATH;	
 	if (GetOpenFileName(&OFN) != 0)
 	{
 		hFile = CreateFile(OFN.lpstrFile, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -108,11 +108,13 @@ void CRoomScene::MapSelectButtonCallback(float fTime, const string& strTag)
 		}
 		else
 		{
-			MessageBox(WINDOWHANDLE, L"¸Ê ¼±ÅÃ ¼º°ø", L"Open", MB_OK);
 			CloseHandle(hFile);
 
+			char strFileName[MAX_PATH] = {};
 			size_t i;
-			wcstombs_s(&i, m_strFileName, MAX_PATH, lpstrFile, wcslen(lpstrFile) + 1);
+			wcstombs_s(&i, strFileName, MAX_PATH, lpstrFile, wcslen(lpstrFile) + 1);
+			string strFilePath = strFileName;
+			GET_SINGLE(CResourcesManager)->SetFileName(strFilePath);
 		}
 	}
 
