@@ -23,11 +23,10 @@ bool CPlayer::Init()
 	SetMove(false);
 	SetPos(50.f, 50.f);
 	SetSize(44.f, 58.f);
-	SetSpeed(400.f);
 	SetPivot(0.5f, 0.5f);
 	SetImageOffset(0.f, 0.f);
 	SetDir(DIR_DOWN);
-	SetSpeed(0.1f);
+	SetSpeed(80.f);
 	SetBubbles(1);
 	SetRange(1);
 	if (CObj::FindObject("Player1"))
@@ -38,38 +37,74 @@ bool CPlayer::Init()
 	
 	string strPN = to_string(m_iPlayerNumber);
 	SetTag("Player" + strPN);
-	CColliderRect* pRC = AddCollider<CColliderRect>("PlayerBody" + strPN);
+	CColliderRect* pColl = AddCollider<CColliderRect>("PlayerBody" + strPN);
 
-	pRC->SetRect(-10.f, -10.f, 10.f, 10.f);
 	//pRC->AddCollisionFunction(CS_ENTER, this,
 	//	&CPlayer::Hit);
 	//pRC->AddCollisionFunction(CS_STAY, this,
 	//	&CPlayer::HitStay);
 
-	SAFE_RELEASE(pRC);
+	SAFE_RELEASE(pColl);
 
 	CAnimation* pAni = CreateAnimation("Player" + strPN + "Animation");
 
-	AddAnimationClip("MoveDown", AT_ATLAS, AO_LOOP, 1.0f, 4, 1,
-		0, 0, 4, 1, 0.f, "PlayerMoveDown", StringToWstring("Player/" + strPN + "P/MoveDown.bmp").c_str());
-	SetAnimationClipColorKey("MoveDown", 255, 0, 255);
+	AddAnimationClip(strPN + "P_StopDown", AT_ATLAS, AO_LOOP, 1.0f, 1, 1,
+		0, 0, 1, 1, 0.f, strPN + "P_StopDown", StringToWstring("Player/" + strPN + "P/stop_down.bmp").c_str());
+	SetAnimationClipColorKey(strPN + "P_StopDown", 255, 0, 255);
 
+	AddAnimationClip(strPN + "P_StopLeft", AT_ATLAS, AO_LOOP, 1.0f, 1, 1,
+		0, 0, 1, 1, 0.f, strPN + "P_StopLeft", StringToWstring("Player/" + strPN + "P/stop_left.bmp").c_str());
+	SetAnimationClipColorKey(strPN + "P_StopLeft", 255, 0, 255);
+
+	AddAnimationClip(strPN + "P_StopRight", AT_ATLAS, AO_LOOP, 1.0f, 1, 1,
+		0, 0, 1, 1, 0.f, strPN + "P_StopRight", StringToWstring("Player/" + strPN + "P/stop_right.bmp").c_str());
+	SetAnimationClipColorKey(strPN + "P_StopRight", 255, 0, 255);
+
+	AddAnimationClip(strPN + "P_StopUp", AT_ATLAS, AO_LOOP, 1.0f, 1, 1,
+		0, 0, 1, 1, 0.f, strPN + "P_StopUp", StringToWstring("Player/" + strPN + "P/stop_up.bmp").c_str());
+	SetAnimationClipColorKey(strPN + "P_StopUp", 255, 0, 255);
 
 	vector<wstring> vecFileName;
 
-	for (int i = 1; i <= 3; ++i)
+	for (int i = 1; i <= 6; ++i)
 	{
-		wchar_t strFileName[MAX_PATH] = {};
-		wsprintf(strFileName, L"Player/Attack/Left/%d.bmp", i);
-		vecFileName.push_back(strFileName);
+		vecFileName.push_back(StringToWstring("Player/" + strPN + "P/move_down_" + to_string(i) + ".bmp"));
 	}
-
-	AddAnimationClip("NormalAttackLeft", AT_FRAME, AO_ONCE_RETURN, 0.4f, 3, 1,
-		0, 0, 3, 1, 0.f, "PlayerAttackLeft",
+	AddAnimationClip(strPN + "P_MoveDown", AT_FRAME, AO_ONCE_RETURN , 0.5f, 6, 1,
+		0, 0, 6, 1, 0.f, strPN + "P_MoveDown",
 		vecFileName);
-	SetAnimationClipColorKey("NormalAttackLeft", 255, 255, 255);
+	SetAnimationClipColorKey(strPN + "P_MoveDown", 255, 0, 255);
+	vecFileName.clear();
 
+	for (int i = 1; i <= 6; ++i)
+	{
+		vecFileName.push_back(StringToWstring("Player/" + strPN + "P/move_up_" + to_string(i) + ".bmp"));
+	}
+	AddAnimationClip(strPN + "P_MoveUp", AT_FRAME, AO_ONCE_RETURN, 0.5f, 6, 1,
+		0, 0, 6, 1, 0.f, strPN + "P_MoveUp",
+		vecFileName);
+	SetAnimationClipColorKey(strPN + "P_MoveUp", 255, 0, 255);
+	vecFileName.clear();
 
+	for (int i = 1; i <= 6; ++i)
+	{
+		vecFileName.push_back(StringToWstring("Player/" + strPN + "P/move_left_" + to_string(i) + ".bmp"));
+	}
+	AddAnimationClip(strPN + "P_MoveLeft", AT_FRAME, AO_ONCE_RETURN, 0.5f, 4, 1,
+		0, 0, 4, 1, 0.f, strPN + "P_MoveLeft",
+		vecFileName);
+	SetAnimationClipColorKey(strPN + "P_MoveLeft", 255, 0, 255);
+	vecFileName.clear();
+
+	for (int i = 1; i <= 6; ++i)
+	{
+		vecFileName.push_back(StringToWstring("Player/" + strPN + "P/move_right_" + to_string(i) + ".bmp"));
+	}
+	AddAnimationClip(strPN + "P_MoveRight", AT_FRAME, AO_ONCE_RETURN, 0.5f, 4, 1,
+		0, 0, 4, 1, 0.f, strPN + "P_MoveRight",
+		vecFileName);
+	SetAnimationClipColorKey(strPN + "P_MoveRight", 255, 0, 255);
+	vecFileName.clear();
 
 	SAFE_RELEASE(pAni);
 
@@ -80,26 +115,81 @@ void CPlayer::Input(float fDeltaTime)
 {
 	CObj::Input(fDeltaTime);
 
-	if (KEYDOWN("MoveFront"))
+	string strPN = to_string(m_iPlayerNumber);
+
+	if (KEYDOWN(strPN + "P_" + "MoveLeft"))
 	{
-		//MoveYFromSpeed(fDeltaTime, MD_BACK);
+		m_strArrowKeys.push_back("Left");
+	}
+	if (KEYDOWN(strPN + "P_" + "MoveRight"))
+	{
+		m_strArrowKeys.push_back("Right");
+	}
+	if (KEYDOWN(strPN + "P_" + "MoveDown"))
+	{
+		m_strArrowKeys.push_back("Down");
+	}
+	if (KEYDOWN(strPN + "P_" + "MoveUp"))
+	{
+		m_strArrowKeys.push_back("Up");
 	}
 
-	if (KEYPRESS("MoveBack"))
+	if (KEYUP(strPN + "P_" + "MoveLeft"))
 	{
-		//MoveYFromSpeed(fDeltaTime, MD_FRONT);
+		m_strArrowKeys.erase(remove(m_strArrowKeys.begin(), m_strArrowKeys.end(), "Left"),
+			m_strArrowKeys.end());
+	}
+	if (KEYUP(strPN + "P_" + "MoveRight"))
+	{
+		m_strArrowKeys.erase(remove(m_strArrowKeys.begin(), m_strArrowKeys.end(), "Right"),
+			m_strArrowKeys.end());;
+	}
+	if (KEYUP(strPN + "P_" + "MoveDown"))
+	{
+		m_strArrowKeys.erase(remove(m_strArrowKeys.begin(), m_strArrowKeys.end(), "Down"),
+			m_strArrowKeys.end());
+	}
+	if (KEYUP(strPN + "P_" + "MoveUp"))
+	{
+		m_strArrowKeys.erase(remove(m_strArrowKeys.begin(), m_strArrowKeys.end(), "Up"),
+			m_strArrowKeys.end());
 	}
 
-	if (KEYPRESS("MoveLeft"))
-	{/*
-		MoveXFromSpeed(fDeltaTime, MD_BACK);
-		m_pAnimation->ChangeClip("RunLeft");
-		m_iDir = -1;
-		m_pAnimation->SetDefaultClip("IdleLeft");*/
-	}
 
-	if (KEYPRESS("MoveRight"))
+	// 대각선 무빙 제거, 이동애니메이션 
+	if (m_strArrowKeys.empty())
 	{
+		m_bMove = false;
+	}
+	else if (!m_strArrowKeys.empty())
+	{
+		if (m_strArrowKeys.back() == "Left")
+		{
+			Move(-m_fSpeed, 0, fDeltaTime);
+			m_pAnimation->ChangeClip(strPN + "P_" + "MoveLeft");
+			m_pAnimation->SetDefaultClip(strPN + "P_" + "StopLeft");
+		}
+
+		if (m_strArrowKeys.back() == "Right")
+		{
+			Move(m_fSpeed, 0, fDeltaTime);
+			m_pAnimation->ChangeClip(strPN + "P_" + "MoveRight");
+			m_pAnimation->SetDefaultClip(strPN + "P_" + "StopRight");
+		}
+
+		if (m_strArrowKeys.back() == "Up")
+		{
+			Move(0, -m_fSpeed, fDeltaTime);
+			m_pAnimation->ChangeClip(strPN + "P_" + "MoveUp");
+			m_pAnimation->SetDefaultClip(strPN + "P_" + "StopUp");
+		}
+
+		if (m_strArrowKeys.back() == "Down")
+		{
+			Move(0, m_fSpeed, fDeltaTime);
+			m_pAnimation->ChangeClip(strPN + "P_" + "MoveDown");
+			m_pAnimation->SetDefaultClip(strPN + "P_" + "StopDown");
+		}
 	}
 
 	if (KEYDOWN("Fire"))
@@ -149,6 +239,5 @@ void CPlayer::Move(float x, float y, float fDeltaTime)
 {
 	m_tPos.x += x * fDeltaTime;
 	m_tPos.y += y * fDeltaTime;
+	m_bMove = true;
 }
-
-

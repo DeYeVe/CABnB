@@ -38,12 +38,11 @@ bool CInput::Init(HWND hWnd)
 {
 	m_hWnd = hWnd;
 
-	AddKey('W', "MoveFront");
-	AddKey('S', "MoveBack");
-	AddKey('A', "MoveLeft");
-	AddKey('D', "MoveRight");
-	AddKey(VK_SPACE, "Fire");
-	AddKey(VK_CONTROL, "Skill1", '1');
+	AddKey('D', "1P_MoveLeft");
+	AddKey('F', "1P_MoveDown");
+	AddKey('G', "1P_MoveRight");
+	AddKey('R', "1P_MoveUp");
+
 	AddKey(VK_LBUTTON, "MouseLButton");
 	AddKey(VK_RBUTTON, "MouseRButton");
 	AddKey(VK_F1, "ToggleBorder");

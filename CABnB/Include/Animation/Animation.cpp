@@ -83,7 +83,7 @@ bool CAnimation::AddClip(const string & strName, ANIMATION_TYPE eType,
 
 	pClip->vecTexture.push_back(pTex);
 
-	pClip->fAnimationTime = 0.f;
+	pClip->fAnimationTime = fAnimationLimitTime;
 	pClip->iFrameX = iStartX;
 	pClip->iFrameY = iStartY;
 	pClip->fOptionTime = 0.f;
@@ -133,7 +133,7 @@ bool CAnimation::AddClip(const string & strName, ANIMATION_TYPE eType,
 	pClip->tFrameSize.y = pClip->vecTexture[0]->GetHeight() / iFrameMaxY;
 
 
-	pClip->fAnimationTime = 0.f;
+	pClip->fAnimationTime = fAnimationLimitTime;
 	pClip->iFrameX = iStartX;
 	pClip->iFrameY = iStartY;
 	pClip->fOptionTime = 0.f;

@@ -7,3 +7,4 @@
 #include <string>
 #include <functional>
 #include <conio.h>
+#include <algorithm>

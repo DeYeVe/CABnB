@@ -20,6 +20,9 @@ private:
 	int			m_iBubbles;
 	int			m_iRange;
 
+private:
+	vector<string> m_strArrowKeys;
+
 public:
 	void SetMove(bool bMove)
 	{
@@ -29,19 +32,42 @@ public:
 	{
 		m_eDir = eDir;
 	}
-	void SetSpeed(bool fSpeed)
+	void SetSpeed(float fSpeed)
 	{
 		m_fSpeed = fSpeed;
+		if (m_fSpeed > 72)
+			m_fSpeed = 72;
 	}
-	void SetBubbles(bool iBubbles)
+	void SetBubbles(int iBubbles)
 	{
 		m_iBubbles = iBubbles;
+		if (m_iRange > 6)
+			m_iRange = 6;
 	}
-	void SetRange(bool iRange)
+	void SetRange(int iRange)
 	{
 		m_iRange = iRange;
-		if (m_iRange > 8)
-			m_iRange = 8;
+		if (m_iRange > 7)
+			m_iRange = 7;
+	}
+
+	void AddSpeed()
+	{
+		m_fSpeed += 16.f;
+		if (m_fSpeed > 144.f)
+			m_fSpeed = 144.f;
+	}
+	void AddBubbles(int iBubbles)
+	{
+		m_iBubbles += iBubbles;
+		if (m_iRange > 6)
+			m_iRange = 6;
+	}
+	void AddRange(int iRange)
+	{
+		m_iRange += iRange;
+		if (m_iRange > 7)
+			m_iRange = 7;
 	}
 
 public:

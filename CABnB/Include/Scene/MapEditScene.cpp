@@ -406,6 +406,12 @@ void CMapEditScene::BlockButtonCallback(float fTime, const string& strTag)
 			m_pSelectedBlock->SetPos(697, 68);
 			m_pSelectedBlock->SetSize(40, 40);
 		}
+		else if (strTag == "BlankBlock")
+		{
+			m_pSelectedBlock->SetBlockType(BT_BLANK);
+			m_pSelectedBlock->SetPos(697, 68);
+			m_pSelectedBlock->SetSize(40, 40);
+		}
 		else if (strTag == "TownBlockRed" || strTag == "TownBlockYellow")
 		{
 			m_pSelectedBlock->SetBlockType(BT_NORMAL);

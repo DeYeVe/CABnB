@@ -63,7 +63,7 @@ bool CRoomScene::Init()
 
 	pRC = (CColliderRect*)pMapSelectBtn->GetCollider("ButtonBody");
 
-	pRC->SetRect(0.f, 0.f, 191, 55);
+	pRC->SetRect(0.f, 0.f, 123, 48);
 
 	SAFE_RELEASE(pRC);
 

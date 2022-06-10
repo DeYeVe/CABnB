@@ -53,11 +53,15 @@ bool CInGameScene::Init()
 	//Default
 	CLayer* pLayer = FindLayer("Default");
 
-	CPlayer* pPlayer = CObj::CreateObj<CPlayer>("Player", pLayer);
-	pPlayer->SetPos(110.f, 110.f);
+	CPlayer* pPlayer1 = CObj::CreateObj<CPlayer>("Player1", pLayer);
+	pPlayer1->SetPos(110.f, 110.f);
 
-	SAFE_RELEASE(pPlayer);
+	CColliderRect* pRC = (CColliderRect*)pPlayer1->GetCollider("PlayerBody1");
+	pRC->SetRect(-20.f, -20.f, 20.f, 20.f);
 
+	SAFE_RELEASE(pRC);
+
+	SAFE_RELEASE(pPlayer1);
 
 	return true;
 }
@@ -71,5 +75,7 @@ int CInGameScene::Update(float fDeltaTime)
 
 int CInGameScene::LateUpdate(float fDeltaTime)
 {
+	CScene::LateUpdate(fDeltaTime);
+
 	return 0;
 }

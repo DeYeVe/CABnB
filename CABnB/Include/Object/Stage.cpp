@@ -7,6 +7,7 @@
 #include "../Scene/Layer.h"
 #include "../Core/PathManager.h"
 #include "../Core/Input.h"
+#include "../Collider/ColliderRect.h"
 
 CStage::CStage()
 {
@@ -57,6 +58,13 @@ void CStage::CreateTile(int iNumX, int iNumY,
 			pTile->SetTexture(strKey, pFileName, strPathKey);
 			pTile->SetColorKey(0, 0, 0);
 
+			CColliderRect* pColl = (CColliderRect*)pTile->AddCollider<CColliderRect>("TileBody" + to_string(i * 15 + j));
+			CColliderRect* pRC = (CColliderRect*)pTile->GetCollider("TileBody" + to_string(i * 15 + j));
+			pRC->SetRect(0.f, 0.f, 40.f, 40.f);
+
+			SAFE_RELEASE(pColl);
+			SAFE_RELEASE(pRC);
+
 			m_vecTile.push_back(pTile);
 		}
 	}
@@ -94,6 +102,13 @@ void CStage::CreateBlock(int iNumX, int iNumY,
 			pBlock->SetTexture(strKey, pFileName, strPathKey);
 			pBlock->SetColorKey(200, 200, 200);
 
+			CColliderRect* pColl = (CColliderRect*)pBlock->AddCollider<CColliderRect>("BlockBody" + to_string(i * 15 + j));
+			CColliderRect* pRC = (CColliderRect*)pBlock->GetCollider("BlockBody" + to_string(i * 15 + j));
+			pRC->SetRect(0.f, 0.f, 40.f, 40.f);
+
+			SAFE_RELEASE(pColl);
+			SAFE_RELEASE(pRC);
+
 			m_vecBlock.push_back(pBlock);
 		}
 	}
@@ -108,12 +123,25 @@ void CStage::SetBlock(const POSITION & tPos, const string & strTag, BLOCK_TYPE e
 	if (m_vecBlock[iIndex]->GetTag() == strTag)
 		return;
 
+	int iBlockOffset = 0;
+	if (strTag == "BlankBlock")
+		iBlockOffset = 0;	
+	if (strTag == "TownBlockRed" || strTag == "TownBlockYellow" || strTag == "TownBox")
+		iBlockOffset = 4;
+	if (strTag == "TownHouseRed" || strTag == "TownHouseYellow" || strTag == "TownHouseBlue")
+		iBlockOffset = 17;
+	if (strTag == "TownTree")
+		iBlockOffset = 27;
+
+
 	m_vecBlock[iIndex]->SetTag(strTag);
 	m_vecBlock[iIndex]->SetTexture(strTag + "CK");
 	m_vecBlock[iIndex]->SetBlockType(eBT);
 	m_vecBlock[iIndex]->SetSize(m_vecBlock[iIndex]->GetSize().x, iHeigth);
 	m_vecBlock[iIndex]->SetPos(m_vecBlock[iIndex]->GetPos().x,
 		m_tPos.y + (iIndex / 15) * 40 - (iHeigth - 40));
+	CColliderRect* pRC = (CColliderRect*)(m_vecBlock[iIndex]->GetColliderList()->back());
+	pRC->SetRect(0.f, iBlockOffset, 40.f, 40.f + iBlockOffset);
 }
 
 
@@ -142,6 +170,59 @@ int CStage::Update(float fDeltaTime)
 int CStage::LateUpdate(float fDeltaTime)
 {
 	CObj::LateUpdate(fDeltaTime);
+
+	{
+		vector<CTile*>::iterator	iter;
+		vector<CTile*>::iterator	iterEnd = m_vecTile.end();
+
+		for (iter = m_vecTile.begin(); iter != iterEnd;)
+		{
+			if (!(*iter)->GetEnable())
+			{
+				++iter;
+				continue;
+			}
+
+			(*iter)->LateUpdate(fDeltaTime);
+
+			if (!(*iter)->GetLife())
+			{
+				SAFE_RELEASE((*iter));
+				iter = m_vecTile.erase(iter);
+				iterEnd = m_vecTile.end();
+			}
+
+			else
+				++iter;
+		}
+	}
+
+	{
+		vector<CBlock*>::iterator	iter;
+		vector<CBlock*>::iterator	iterEnd = m_vecBlock.end();
+
+		for (iter = m_vecBlock.begin(); iter != iterEnd;)
+		{
+			if (!(*iter)->GetEnable())
+			{
+				++iter;
+				continue;
+			}
+
+			(*iter)->LateUpdate(fDeltaTime);
+
+			if (!(*iter)->GetLife())
+			{
+				SAFE_RELEASE((*iter));
+				iter = m_vecBlock.erase(iter);
+				iterEnd = m_vecBlock.end();
+			}
+
+			else
+				++iter;
+		}
+	}
+
 	return 0;
 }
 
@@ -169,20 +250,7 @@ void CStage::Render(HDC hDC, float fDeltaTime)
 		for (size_t i = 0; i < m_vecBlock.size(); ++i)
 		{
 			m_vecBlock[i]->Render(hDC, fDeltaTime);
-		}
-		
-		for (int i = 1; i < m_iTileNumX; ++i)
-		{
-			MoveToEx(hDC, GetPos().x + i * m_iTileSize, GetPos().y, NULL);
-			LineTo(hDC, GetPos().x + i * m_iTileSize,
-				GetPos().y + m_iTileNumY * m_iTileSize);
-		}
-		for (int i = 1; i < m_iTileNumY; ++i)
-		{
-			MoveToEx(hDC, GetPos().x, GetPos().y + i * m_iTileSize, NULL);
-			LineTo(hDC, GetPos().x + m_iTileNumX * m_iTileSize,
-				GetPos().y + i * m_iTileSize);
-		}
+		}		
 	}
 }
 
