@@ -17,7 +17,7 @@ private:
 	bool		m_bMove;
 	DIR			m_eDir;
 	float		m_fSpeed;
-	int			m_iBubbles;
+	int			m_iBomb;
 	int			m_iRange;
 
 private:
@@ -38,11 +38,11 @@ public:
 		if (m_fSpeed > 72)
 			m_fSpeed = 72;
 	}
-	void SetBubbles(int iBubbles)
+	void SetBomb(int iBomb)
 	{
-		m_iBubbles = iBubbles;
-		if (m_iRange > 6)
-			m_iRange = 6;
+		m_iBomb = iBomb;
+		if (m_iBomb > 6)
+			m_iBomb = 6;
 	}
 	void SetRange(int iRange)
 	{
@@ -57,11 +57,13 @@ public:
 		if (m_fSpeed > 144.f)
 			m_fSpeed = 144.f;
 	}
-	void AddBubbles(int iBubbles)
+	void AddiBomb(int iBomb)
 	{
-		m_iBubbles += iBubbles;
-		if (m_iRange > 6)
-			m_iRange = 6;
+		m_iBomb += iBomb;
+		if (m_iBomb > 6)
+			m_iBomb = 6;
+		if (m_iBomb < 1)
+			m_iBomb = 1;
 	}
 	void AddRange(int iRange)
 	{
@@ -83,9 +85,9 @@ public:
 	{
 		return m_fSpeed;
 	}
-	int GetBubbles() const
+	int GetBomb() const
 	{
-		return m_iBubbles;
+		return m_iBomb;
 	}
 	int GetRange() const
 	{

@@ -34,9 +34,6 @@
     <Filter Include="03. Object\01. Player">
       <UniqueIdentifier>{d143b690-cb2c-4d53-92b9-9efff37625ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Object\02. Bubble">
-      <UniqueIdentifier>{acd58948-c04a-4097-a20d-d1c24d3c8208}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Object\03. Item">
       <UniqueIdentifier>{a793f2f8-8f4c-4f5a-b3c5-decf0c075c0a}</UniqueIdentifier>
     </Filter>
@@ -72,6 +69,9 @@
     </Filter>
     <Filter Include="03. Object\06. Stage">
       <UniqueIdentifier>{b2e3d640-2e66-480a-b277-658f59a8e256}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\02. Bomb">
+      <UniqueIdentifier>{acd58948-c04a-4097-a20d-d1c24d3c8208}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +167,12 @@
     </ClCompile>
     <ClCompile Include="Scene\InGameScene.cpp">
       <Filter>02. Scene\02. Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>03. Object\02. Bomb</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider\ColliderPixel.cpp">
+      <Filter>05. Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +283,12 @@
     </ClInclude>
     <ClInclude Include="Scene\InGameScene.h">
       <Filter>02. Scene\02. Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>03. Object\02. Bomb</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider\ColliderPixel.h">
+      <Filter>05. Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

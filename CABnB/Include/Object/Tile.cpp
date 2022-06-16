@@ -34,6 +34,8 @@ void CTile::Input(float fDeltaTime)
 int CTile::Update(float fDeltaTime)
 {
 	CObj::Update(fDeltaTime);
+	m_pTex = m_pTexture;
+
 	return 0;
 }
 

@@ -56,14 +56,14 @@ void CStage::CreateTile(int iNumX, int iNumY,
 			pTile->SetPos(GetPos().x + j * iSize, GetPos().y + i * iSize);
 
 			pTile->SetTexture(strKey, pFileName, strPathKey);
-			pTile->SetColorKey(0, 0, 0);
+			pTile->SetColorKey(255, 255, 255);
 
-			CColliderRect* pColl = (CColliderRect*)pTile->AddCollider<CColliderRect>("TileBody" + to_string(i * 15 + j));
-			CColliderRect* pRC = (CColliderRect*)pTile->GetCollider("TileBody" + to_string(i * 15 + j));
-			pRC->SetRect(0.f, 0.f, 40.f, 40.f);
+			//CColliderRect* pColl = (CColliderRect*)pTile->AddCollider<CColliderRect>("TileBody" + to_string(i * 15 + j));
+			//CColliderRect* pRC = (CColliderRect*)pTile->GetCollider("TileBody" + to_string(i * 15 + j));
+			//pRC->SetRect(0.f, 0.f, 40.f, 40.f);
 
-			SAFE_RELEASE(pColl);
-			SAFE_RELEASE(pRC);
+			//SAFE_RELEASE(pColl);
+			//SAFE_RELEASE(pRC);
 
 			m_vecTile.push_back(pTile);
 		}
@@ -128,7 +128,8 @@ void CStage::SetBlock(const POSITION & tPos, const string & strTag, BLOCK_TYPE e
 		iBlockOffset = 0;	
 	if (strTag == "TownBlockRed" || strTag == "TownBlockYellow" || strTag == "TownBox")
 		iBlockOffset = 4;
-	if (strTag == "TownHouseRed" || strTag == "TownHouseYellow" || strTag == "TownHouseBlue")
+	if (strTag == "TownHouseRed" || strTag == "TownHouseYellow" 
+		|| strTag == "TownHouseBlue" || strTag == "TownBush")
 		iBlockOffset = 17;
 	if (strTag == "TownTree")
 		iBlockOffset = 27;
@@ -238,9 +239,19 @@ void CStage::Render(HDC hDC, float fDeltaTime)
 		POSITION	tPos = m_tPos - m_tSize * m_tPivot;
 		POSITION	tCamPos = GET_SINGLE(CCamera)->GetPos();
 
-		BitBlt(hDC, tPos.x, tPos.y, GETRESOLUTION.iW,
-			GETRESOLUTION.iH, m_pTexture->GetDC(), tCamPos.x, tCamPos.y,
-			SRCCOPY);
+		if (m_pTexture->GetColorKeyEnable())
+		{
+			TransparentBlt(hDC, tPos.x, tPos.y, GETRESOLUTION.iW,
+				GETRESOLUTION.iH, m_pTexture->GetDC(), tCamPos.x, tCamPos.y,
+				GETRESOLUTION.iW, GETRESOLUTION.iH, m_pTexture->GetColorKey());
+		}
+
+		else
+		{
+			BitBlt(hDC, tPos.x, tPos.y, GETRESOLUTION.iW,
+				GETRESOLUTION.iH, m_pTexture->GetDC(), tCamPos.x, tCamPos.y,
+				SRCCOPY);
+		}
 
 		for (size_t i = 0; i < m_vecTile.size(); ++i)
 		{
@@ -354,4 +365,44 @@ void CStage::ClearBlock()
 	}
 
 	Safe_Release_VecList(m_vecBlock);
+}
+
+void CStage::EmptyTile()
+{
+	for (CTile* pTile : m_vecTile)
+	{
+		pTile->SetTexture("BlankTile", L"Tile/BlankTile.bmp", TEXTURE_PATH);
+		pTile->SetColorKey(255, 255, 255);
+	}
+}
+
+void CStage::EmptyBlock()
+{
+	for (CBlock* pBlock : m_vecBlock)
+	{
+		pBlock->SetTexture("BlankBlock", L"Tile/BlankBlock.bmp", TEXTURE_PATH);
+		pBlock->SetColorKey(200, 200, 200);
+		pBlock->SetBlockType(BT_BLANK);
+	}
+}
+
+POSITION CStage::GetStartPos()
+{
+	POSITION	tStartPos;
+
+	vector<CBlock*>::iterator iter;
+	vector<CBlock*>::iterator iterEnd = m_vecBlock.end();
+
+	for (iter = m_vecBlock.begin(); iter != iterEnd; ++iter)
+	{
+		if ((*iter)->GetBlockType() == BT_START)
+		{
+			tStartPos = (*iter)->GetPos();
+			(*iter)->SetBlockType(BT_BLANK);
+			(*iter)->SetTexture("BlankBlockCK");
+			break;
+		}
+	}
+
+	return tStartPos;
 }

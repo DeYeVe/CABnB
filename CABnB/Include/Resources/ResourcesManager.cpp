@@ -95,13 +95,13 @@ CTexture * CResourcesManager::LoadTexture(FILE * pFile)
 	iLength = 0;
 	fread(&iLength, 4, 1, pFile);
 	fread(strPathKey, 1, iLength, pFile);
-	strFileName[iLength] = 0;
+	strPathKey[iLength] = 0;
 
 	// ColorKey 
 	bool		bColorKey = false;
 	COLORREF	dwColorKey = 0;
-	fwrite(&bColorKey, 1, 1, pFile);
-	fwrite(&dwColorKey, sizeof(COLORREF), 1, pFile);
+	fread(&bColorKey, 1, 1, pFile);
+	fread(&dwColorKey, sizeof(COLORREF), 1, pFile);
 
 	CTexture* pTex = GET_SINGLE(CResourcesManager)->LoadTexture(strKey, strFileName, strPathKey);
 

@@ -25,6 +25,7 @@ enum COLLIDER_TYPE
 	CT_RECT,
 	CT_LINE,
 	CT_POINT,
+	CT_PIXEL,
 	CT_END
 };
 

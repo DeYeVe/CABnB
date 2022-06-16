@@ -540,7 +540,7 @@ void CObj::Load(FILE * pFile)
 	for (int i = 0; i < iLength; ++i)
 	{
 		COLLIDER_TYPE eType;
-		fwrite(&eType, 4, 1, pFile);
+		fread(&eType, 4, 1, pFile);
 
 		CCollider* pCollider = NULL;
 

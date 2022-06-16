@@ -21,13 +21,13 @@ CPlayer::~CPlayer()
 bool CPlayer::Init()
 {
 	SetMove(false);
-	SetPos(50.f, 50.f);
+	SetPos(0.f, 0.f);
 	SetSize(44.f, 58.f);
 	SetPivot(0.5f, 0.5f);
 	SetImageOffset(0.f, 0.f);
 	SetDir(DIR_DOWN);
 	SetSpeed(80.f);
-	SetBubbles(1);
+	SetBomb(1);
 	SetRange(1);
 	if (CObj::FindObject("Player1"))
 		m_iPlayerNumber = 2;

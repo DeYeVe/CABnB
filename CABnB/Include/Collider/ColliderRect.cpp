@@ -1,6 +1,7 @@
 #include "ColliderRect.h"
 #include "../Object/Obj.h"
 #include "ColliderPoint.h"
+#include "ColliderPixel.h"
 #include "../Core/Camera.h"
 #include "../Core/Input.h"
 
@@ -66,6 +67,11 @@ bool CColliderRect::Collision(CCollider* pDest)
 	case CT_POINT:
 		return CollisionRectToPoint(m_tWorldInfo,
 			((CColliderPoint*)pDest)->GetPoint());
+	case CT_PIXEL:
+		return CollisionRectToPixel(m_tWorldInfo,
+			((CColliderPixel*)pDest)->GetPixel(),
+			((CColliderPixel*)pDest)->GetWidth(),
+			((CColliderPixel*)pDest)->GetHeight());
 	}
 	return false;
 }
@@ -99,8 +105,10 @@ CColliderRect * CColliderRect::Clone()
 
 void CColliderRect::Save(FILE * pFile)
 {
+	fwrite(&m_tInfo, sizeof(m_tInfo), 1, pFile);
 }
 
 void CColliderRect::Load(FILE * pFile)
 {
+	fread(&m_tInfo, sizeof(m_tInfo), 1, pFile);
 }

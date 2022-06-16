@@ -1,6 +1,7 @@
 #include "Collider.h"
 #include "../Object/Obj.h"
 #include "../Core/Math.h"
+#include "ColliderRect.h"
 
 CCollider::CCollider()
 {
@@ -81,60 +82,6 @@ bool CCollider::CollisionRectToRect(const RECTANGLE & src, const RECTANGLE & des
 	return true;
 }
 
-bool CCollider::CollisionRectToSphere(const RECTANGLE & src, const SPHERE & dest)
-{
-	// 원의 중점의 x좌표가 사각형의 가로 영역 안에 있는지,
-	// 원의 중점의 y좌표가 사각형의 세로 영역 안에 있는 지 체크한다.
-	// 둘중 하나라도 맞다면 사각형의 위, 아래, 좌, 우 영역 안에
-	// 존재한다는 것이다.
-
-	if ((src.l <= dest.tCenter.x && dest.tCenter.x <= src.r) ||
-		(src.t <= dest.tCenter.y && dest.tCenter.y <= src.b))
-	{
-		RECTANGLE	tRC = src;
-		tRC.l -= dest.fRadius;
-		tRC.t -= dest.fRadius;
-		tRC.r += dest.fRadius;
-		tRC.b += dest.fRadius;
-
-		if (dest.tCenter.x < tRC.l)
-			return false;
-		else if (dest.tCenter.x > tRC.r)
-			return false;
-		else if (dest.tCenter.y < tRC.t)
-			return false;
-		else if (dest.tCenter.y > tRC.b)
-			return false;
-
-		return true;
-	}
-
-	// 사각형의 4개의 점이 하나라도 원 안에 있을 경우 충돌이다.
-	POSITION	tPos[4];
-	tPos[0] = POSITION(src.l, src.t);
-	tPos[1] = POSITION(src.r, src.t);
-	tPos[2] = POSITION(src.l, src.b);
-	tPos[3] = POSITION(src.r, src.b);
-
-	for (int i = 0; i < 4; ++i)
-	{
-		float fDist = CMath::Distance(tPos[i], dest.tCenter);
-
-		if (fDist <= dest.fRadius)
-			return true;
-	}
-
-	return false;
-}
-
-bool CCollider::CollisionSphereToSphere(const SPHERE & src, const SPHERE & dest)
-{
-
-	float fDist = CMath::Distance(src.tCenter, dest.tCenter);
-
-	return fDist <= src.fRadius + dest.fRadius;
-}
-
 bool CCollider::CollisionRectToPixel(const RECTANGLE & src, const vector<PIXEL>& vecPixel, int iWidth, int iHeight)
 {
 	m_tHitPoint.x = -1;
@@ -167,11 +114,6 @@ bool CCollider::CollisionRectToPixel(const RECTANGLE & src, const vector<PIXEL>&
 	return false;
 }
 
-bool CCollider::CollisionSphereToPixel(const SPHERE & src, const vector<PIXEL>& vecPixel, int iWidth, int iHeight)
-{
-	return false;
-}
-
 bool CCollider::CollisionRectToPoint(const RECTANGLE & src, const POSITION & dest)
 {
 	if (dest.x < src.l)
@@ -184,11 +126,6 @@ bool CCollider::CollisionRectToPoint(const RECTANGLE & src, const POSITION & des
 		return false;
 
 	return true;
-}
-
-bool CCollider::CollisionSphereToPoint(const SPHERE & src, const POSITION & dest)
-{
-	return CMath::Distance(dest, src.tCenter) <= src.fRadius;
 }
 
 bool CCollider::CollisionPixelToPoint(const vector<PIXEL>& vecPixel, int iWidth, int iHeight, const POSITION & dest)

@@ -41,6 +41,8 @@ void CBlock::Input(float fDeltaTime)
 int CBlock::Update(float fDeltaTime)
 {
 	CObj::Update(fDeltaTime);
+
+	m_pTex = m_pTexture;
 	return 0;
 }
 
@@ -116,6 +118,4 @@ void CBlock::Load(FILE * pFile)
 	CObj::Load(pFile);
 
 	fread(&m_eType, 4, 1, pFile);
-
-	SetBlockType(m_eType);
 }

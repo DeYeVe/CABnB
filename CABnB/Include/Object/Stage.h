@@ -52,5 +52,12 @@ public:
 private:
 	void ClearTile();
 	void ClearBlock();
+
+public:
+	void EmptyTile();
+	void EmptyBlock();
+
+public:
+	POSITION GetStartPos();
 };
 
