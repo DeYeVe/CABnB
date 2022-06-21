@@ -30,6 +30,11 @@ void CColliderRect::SetRect(float l, float t, float r, float b)
 
 bool CColliderRect::Init()
 {
+	POSITION	tPos = m_pObj->GetPos();
+	m_tWorldInfo.l = tPos.x + m_tInfo.l;
+	m_tWorldInfo.t = tPos.y + m_tInfo.t;
+	m_tWorldInfo.r = tPos.x + m_tInfo.r;
+	m_tWorldInfo.b = tPos.y + m_tInfo.b;
 	return true;
 }
 
@@ -105,10 +110,12 @@ CColliderRect * CColliderRect::Clone()
 
 void CColliderRect::Save(FILE * pFile)
 {
+	CCollider::Save(pFile);
 	fwrite(&m_tInfo, sizeof(m_tInfo), 1, pFile);
 }
 
 void CColliderRect::Load(FILE * pFile)
 {
+	CCollider::Load(pFile);
 	fread(&m_tInfo, sizeof(m_tInfo), 1, pFile);
 }

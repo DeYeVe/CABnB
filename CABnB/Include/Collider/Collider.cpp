@@ -63,6 +63,20 @@ void CCollider::Save(FILE * pFile)
 
 void CCollider::Load(FILE * pFile)
 {
+	// Tag 정보 로드
+	int iLength = 0;
+	char strText[MAX_PATH] = {};
+
+	// Tag 길이 로드
+	fread(&iLength, 4, 1, pFile);
+
+	// Tag 문자열 로드
+	fread(strText, 1, iLength, pFile);
+	strText[iLength] = 0;
+	m_strTag = strText;
+
+	// 충돌체 타입 저장
+	fread(&m_eCollType, 4, 1, pFile);
 }
 
 bool CCollider::CollisionRectToRect(const RECTANGLE & src, const RECTANGLE & dest)

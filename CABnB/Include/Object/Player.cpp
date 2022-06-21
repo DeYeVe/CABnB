@@ -155,8 +155,6 @@ void CPlayer::Input(float fDeltaTime)
 			m_strArrowKeys.end());
 	}
 
-
-	// 대각선 무빙 제거, 이동애니메이션 
 	if (m_strArrowKeys.empty())
 	{
 		m_bMove = false;

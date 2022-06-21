@@ -8,6 +8,7 @@
 #include "../Core/PathManager.h"
 #include "../Core/Input.h"
 #include "../Collider/ColliderRect.h"
+#include "Player.h"
 
 CStage::CStage()
 {
@@ -102,8 +103,8 @@ void CStage::CreateBlock(int iNumX, int iNumY,
 			pBlock->SetTexture(strKey, pFileName, strPathKey);
 			pBlock->SetColorKey(200, 200, 200);
 
-			CColliderRect* pColl = (CColliderRect*)pBlock->AddCollider<CColliderRect>("BlockBody" + to_string(i * 15 + j));
-			CColliderRect* pRC = (CColliderRect*)pBlock->GetCollider("BlockBody" + to_string(i * 15 + j));
+			CColliderRect* pColl = (CColliderRect*)pBlock->AddCollider<CColliderRect>("BlockBody");
+			CColliderRect* pRC = (CColliderRect*)pBlock->GetCollider("BlockBody");
 			pRC->SetRect(0.f, 0.f, 40.f, 40.f);
 
 			SAFE_RELEASE(pColl);
@@ -160,11 +161,24 @@ bool CStage::Init()
 void CStage::Input(float fDeltaTime)
 {
 	CObj::Input(fDeltaTime);
+
+	for (size_t i = 0; i < m_vecPlayer.size(); ++i)
+	{
+		m_vecPlayer[i]->Input(fDeltaTime);
+	}
+	// + item , Bomb
 }
 
 int CStage::Update(float fDeltaTime)
 {
 	CObj::Update(fDeltaTime);
+
+	for (size_t i = 0; i < m_vecPlayer.size(); ++i)
+	{
+		m_vecPlayer[i]->Update(fDeltaTime);
+	}
+	// + item , Bomb
+
 	return 0;
 }
 
@@ -224,12 +238,24 @@ int CStage::LateUpdate(float fDeltaTime)
 		}
 	}
 
+	for (size_t i = 0; i < m_vecPlayer.size(); ++i)
+	{
+		m_vecPlayer[i]->LateUpdate(fDeltaTime);
+	}
+	// + item , Bomb
+
 	return 0;
 }
 
 void CStage::Collision(float fDeltaTime)
 {
 	CObj::Collision(fDeltaTime);
+
+	for (size_t i = 0; i < m_vecPlayer.size(); ++i)
+	{
+		m_vecPlayer[i]->Collision(fDeltaTime);
+	}
+	// + item , Bomb
 }
 
 void CStage::Render(HDC hDC, float fDeltaTime)
@@ -257,11 +283,30 @@ void CStage::Render(HDC hDC, float fDeltaTime)
 		{
 			m_vecTile[i]->Render(hDC, fDeltaTime);
 		}
+		
+		list<CObj*> objList;
 
 		for (size_t i = 0; i < m_vecBlock.size(); ++i)
 		{
-			m_vecBlock[i]->Render(hDC, fDeltaTime);
-		}		
+			objList.push_back(m_vecBlock[i]);
+		}
+
+		for (size_t i = 0; i < m_vecPlayer.size(); ++i)
+		{
+			objList.push_back(m_vecPlayer[i]);
+		}
+
+		objList.sort(CStage::ObjSort);
+
+		// + item, bomb
+
+		list<CObj*>::iterator iter;
+		list<CObj*>::iterator iterEnd = objList.end();
+
+		for (iter = objList.begin(); iter != iterEnd; ++iter)
+		{
+			(*iter)->Render(hDC, fDeltaTime);
+		}	
 	}
 }
 
@@ -386,6 +431,12 @@ void CStage::EmptyBlock()
 	}
 }
 
+void CStage::SetPlayer(CPlayer * pP1, CPlayer * pP2)
+{
+	m_vecPlayer.push_back(pP1);
+	m_vecPlayer.push_back(pP2);
+}
+
 POSITION CStage::GetStartPos()
 {
 	POSITION	tStartPos;
@@ -406,3 +457,12 @@ POSITION CStage::GetStartPos()
 
 	return tStartPos;
 }
+
+bool CStage::ObjSort(CObj* pObj1, CObj* pObj2)
+{
+	CColliderRect* pRC1 = (CColliderRect*)(pObj1->GetColliderList()->back());
+	CColliderRect* pRC2 = (CColliderRect*)(pObj2->GetColliderList()->back());
+
+	return pRC1->GetWorldInfo().b < pRC2->GetWorldInfo().b;
+}
+
