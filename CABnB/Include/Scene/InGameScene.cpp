@@ -3,6 +3,7 @@
 #include "Layer.h"
 #include "../Core/Camera.h"
 #include "../Collider/ColliderRect.h"
+#include "../Collider/ColliderPixel.h"
 #include "../Core/Core.h"
 #include "SceneManager.h"
 #include "../Core/Input.h"
@@ -29,7 +30,7 @@ bool CInGameScene::Init()
 	if (!CScene::Init())
 		return false;
 
-	//UI
+	//// UI
 	CLayer* pUILayer = FindLayer("UI");
 
 	CUIPanel*	pBackPanel = CObj::CreateObj<CUIPanel>("BackPanel", pUILayer);
@@ -38,35 +39,41 @@ bool CInGameScene::Init()
 	pBackPanel->SetTexture("InGame", L"bg/InGame.bmp");
 	pBackPanel->SetColorKey(255, 0, 255);
 
-	//Stage
-	CStage* pStage = CObj::CreateObj<CStage>("Stage", FindLayer("Stage"));
+	//// Default
+	CLayer* pLayer = FindLayer("Default");
+
+	////Stage
+	CLayer* pStageLayer = FindLayer("Stage");
+	CStage* pStage = CObj::CreateObj<CStage>("Stage", pStageLayer);
 
 	string strFileName = GET_SINGLE(CResourcesManager)->GetFileName();
 
 	pStage->LoadFromFullPath(strFileName.c_str());
+	std::vector<class CBlock*> vecBlock = pStage->GetVecBlock();
+	for (size_t i = 0; i < vecBlock.size(); ++i)
+	{
+		pLayer->AddObject(vecBlock[i]);
+	}
 
-	// Default
-	CLayer* pLayer = FindLayer("Default");
-
+	//// Default
 	// 1P
-	POSITION	m_tStartPos = pStage->GetStartPos() + (20.f, 20.f);
-	CPlayer* pPlayer1 = CObj::CreateObj<CPlayer>("Player1", NULL);
-	pPlayer1->SetPos(m_tStartPos);
-
-	CColliderRect* pRC = (CColliderRect*)pPlayer1->GetCollider("PlayerBody1");
-	pRC->SetRect(-20.f, -20.f, 20.f, 20.f);
+	POSITION tStartPos = pStage->GetStartPos() + (20.f, 20.f);
+	CPlayer* pPlayer1 = CObj::CreateObj<CPlayer>("Player1", pLayer);
+	pPlayer1->SetPos(tStartPos);
 
 	// 2P
-	m_tStartPos = pStage->GetStartPos() + (20.f, 20.f);
-	CPlayer* pPlayer2 = CObj::CreateObj<CPlayer>("Player2", NULL);
-	pPlayer2->SetPos(m_tStartPos);
+	tStartPos = pStage->GetStartPos() + (20.f, 20.f);
+	CPlayer* pPlayer2 = CObj::CreateObj<CPlayer>("Player2", pLayer);
+	pPlayer2->SetPos(tStartPos);
 
-	pRC = (CColliderRect*)pPlayer2->GetCollider("PlayerBody2");
-	pRC->SetRect(-20.f, -20.f, 20.f, 20.f);
+	//////Pixel
+	//CColliderPixel* pPixel = pBackPanel->AddCollider<CColliderPixel>("StageColl");
 
-	pStage->SetPlayer(pPlayer1, pPlayer2);
+	//pPixel->SetPixelInfo("bg/InGame.bmp");
 
-	SAFE_RELEASE(pRC);
+	//SAFE_RELEASE(pPixel);
+
+	SAFE_RELEASE(pStage);
 
 	SAFE_RELEASE(pPlayer1);
 	SAFE_RELEASE(pPlayer2);

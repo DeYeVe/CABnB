@@ -161,23 +161,11 @@ bool CStage::Init()
 void CStage::Input(float fDeltaTime)
 {
 	CObj::Input(fDeltaTime);
-
-	for (size_t i = 0; i < m_vecPlayer.size(); ++i)
-	{
-		m_vecPlayer[i]->Input(fDeltaTime);
-	}
-	// + item , Bomb
 }
 
 int CStage::Update(float fDeltaTime)
 {
 	CObj::Update(fDeltaTime);
-
-	for (size_t i = 0; i < m_vecPlayer.size(); ++i)
-	{
-		m_vecPlayer[i]->Update(fDeltaTime);
-	}
-	// + item , Bomb
 
 	return 0;
 }
@@ -186,76 +174,12 @@ int CStage::LateUpdate(float fDeltaTime)
 {
 	CObj::LateUpdate(fDeltaTime);
 
-	{
-		vector<CTile*>::iterator	iter;
-		vector<CTile*>::iterator	iterEnd = m_vecTile.end();
-
-		for (iter = m_vecTile.begin(); iter != iterEnd;)
-		{
-			if (!(*iter)->GetEnable())
-			{
-				++iter;
-				continue;
-			}
-
-			(*iter)->LateUpdate(fDeltaTime);
-
-			if (!(*iter)->GetLife())
-			{
-				SAFE_RELEASE((*iter));
-				iter = m_vecTile.erase(iter);
-				iterEnd = m_vecTile.end();
-			}
-
-			else
-				++iter;
-		}
-	}
-
-	{
-		vector<CBlock*>::iterator	iter;
-		vector<CBlock*>::iterator	iterEnd = m_vecBlock.end();
-
-		for (iter = m_vecBlock.begin(); iter != iterEnd;)
-		{
-			if (!(*iter)->GetEnable())
-			{
-				++iter;
-				continue;
-			}
-
-			(*iter)->LateUpdate(fDeltaTime);
-
-			if (!(*iter)->GetLife())
-			{
-				SAFE_RELEASE((*iter));
-				iter = m_vecBlock.erase(iter);
-				iterEnd = m_vecBlock.end();
-			}
-
-			else
-				++iter;
-		}
-	}
-
-	for (size_t i = 0; i < m_vecPlayer.size(); ++i)
-	{
-		m_vecPlayer[i]->LateUpdate(fDeltaTime);
-	}
-	// + item , Bomb
-
 	return 0;
 }
 
 void CStage::Collision(float fDeltaTime)
 {
 	CObj::Collision(fDeltaTime);
-
-	for (size_t i = 0; i < m_vecPlayer.size(); ++i)
-	{
-		m_vecPlayer[i]->Collision(fDeltaTime);
-	}
-	// + item , Bomb
 }
 
 void CStage::Render(HDC hDC, float fDeltaTime)
@@ -278,35 +202,6 @@ void CStage::Render(HDC hDC, float fDeltaTime)
 				GETRESOLUTION.iH, m_pTexture->GetDC(), tCamPos.x, tCamPos.y,
 				SRCCOPY);
 		}
-
-		for (size_t i = 0; i < m_vecTile.size(); ++i)
-		{
-			m_vecTile[i]->Render(hDC, fDeltaTime);
-		}
-		
-		list<CObj*> objList;
-
-		for (size_t i = 0; i < m_vecBlock.size(); ++i)
-		{
-			objList.push_back(m_vecBlock[i]);
-		}
-
-		for (size_t i = 0; i < m_vecPlayer.size(); ++i)
-		{
-			objList.push_back(m_vecPlayer[i]);
-		}
-
-		objList.sort(CStage::ObjSort);
-
-		// + item, bomb
-
-		list<CObj*>::iterator iter;
-		list<CObj*>::iterator iterEnd = objList.end();
-
-		for (iter = objList.begin(); iter != iterEnd; ++iter)
-		{
-			(*iter)->Render(hDC, fDeltaTime);
-		}	
 	}
 }
 
@@ -431,10 +326,9 @@ void CStage::EmptyBlock()
 	}
 }
 
-void CStage::SetPlayer(CPlayer * pP1, CPlayer * pP2)
+std::vector<class CBlock*> CStage::GetVecBlock() const
 {
-	m_vecPlayer.push_back(pP1);
-	m_vecPlayer.push_back(pP2);
+	return m_vecBlock;
 }
 
 POSITION CStage::GetStartPos()
@@ -456,13 +350,5 @@ POSITION CStage::GetStartPos()
 	}
 
 	return tStartPos;
-}
-
-bool CStage::ObjSort(CObj* pObj1, CObj* pObj2)
-{
-	CColliderRect* pRC1 = (CColliderRect*)(pObj1->GetColliderList()->back());
-	CColliderRect* pRC2 = (CColliderRect*)(pObj2->GetColliderList()->back());
-
-	return pRC1->GetWorldInfo().b < pRC2->GetWorldInfo().b;
 }
 

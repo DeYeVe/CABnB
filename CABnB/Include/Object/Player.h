@@ -114,5 +114,7 @@ private:
 
 		return wstr;
 	}
+public:
+	void Hit(CCollider * pSrc, CCollider * pDest, float fDeltaTime);
 };
 

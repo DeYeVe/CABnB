@@ -1,6 +1,7 @@
 #include "Layer.h"
 #include "../Object/Obj.h"
 #include "../Collider/CollisionManager.h"
+#include "../Collider/ColliderRect.h"
 
 CLayer::CLayer() :
 	m_iZOrder(0),
@@ -154,6 +155,8 @@ void CLayer::Collision(float fDeltaTime)
 
 void CLayer::Render(HDC hDC, float fDeltaTime)
 {
+	m_ObjList.sort(CLayer::ObjSort);
+
 	list<CObj*>::iterator iter;
 	list<CObj*>::iterator iterEnd = m_ObjList.end();
 
@@ -178,4 +181,17 @@ void CLayer::Render(HDC hDC, float fDeltaTime)
 		else
 			iter++;
 	}
+}
+
+bool CLayer::ObjSort(CObj* pObj1, CObj* pObj2)
+{
+	if (pObj1->GetColliderList()->empty())
+		return false;
+	if (pObj2->GetColliderList()->empty())
+		return false;
+
+	CColliderRect* pRC1 = (CColliderRect*)(pObj1->GetColliderList()->back());
+	CColliderRect* pRC2 = (CColliderRect*)(pObj2->GetColliderList()->back());
+
+	return pRC1->GetWorldInfo().b < pRC2->GetWorldInfo().b;
 }

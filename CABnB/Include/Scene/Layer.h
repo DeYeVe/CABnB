@@ -83,6 +83,9 @@ public:
 	int LateUpdate(float fDeltaTime);
 	void Collision(float fDeltaTime);
 	void Render(HDC hDC, float fDeltaTime);
+
+public:
+	static bool ObjSort(class CObj* pObj1, class CObj* pObj2);
 };
 
 

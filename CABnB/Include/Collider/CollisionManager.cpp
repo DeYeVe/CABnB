@@ -1,6 +1,7 @@
 #include "CollisionManager.h"
 #include "../Object/Obj.h"
 #include "Collider.h"
+#include "../Core/Math.h"
 
 DEFINITION_SINGLE(CCollisionManager)
 
@@ -35,12 +36,20 @@ void CCollisionManager::Collision(float fDeltaTime)
 
 	for (iter = m_CollisionList.begin(); iter != iterEnd; ++iter)
 	{
+		if ((*iter)->GetTag() == "Block")
+			continue;
 		list<CObj*>::iterator	iter1 = iter;
 		++iter1;
 		list<CObj*>::iterator	iter1End = m_CollisionList.end();
 		for (; iter1 != iter1End; ++iter1)
 		{
-			Collision(*iter, *iter1, fDeltaTime);
+			if ((*iter1)->GetTag() == "Block")
+			{
+				if (CMath::Distance((*iter)->GetPos(), (*iter1)->GetPos()) < 42.f)
+					Collision(*iter, *iter1, fDeltaTime);
+			}
+			else
+				Collision(*iter, *iter1, fDeltaTime);
 		}
 	}
 

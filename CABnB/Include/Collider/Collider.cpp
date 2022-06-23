@@ -116,7 +116,7 @@ bool CCollider::CollisionRectToPixel(const RECTANGLE & src, const vector<PIXEL>&
 		{
 			int idx = i * iWidth + j;
 			const PIXEL&	pixel = vecPixel[idx];
-			if (pixel.r == 255 && pixel.g == 0 && pixel.b == 255)
+			if (pixel.r == 103 && pixel.g == 104 && pixel.b == 103)
 			{
 				m_tHitPoint.x = j;
 				m_tHitPoint.y = i;

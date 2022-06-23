@@ -37,14 +37,14 @@ bool CPlayer::Init()
 	
 	string strPN = to_string(m_iPlayerNumber);
 	SetTag("Player" + strPN);
-	CColliderRect* pColl = AddCollider<CColliderRect>("PlayerBody" + strPN);
+	CColliderRect* pRC = AddCollider<CColliderRect>("PlayerBody" + strPN);
+	pRC->SetRect(-20.f, -20.f, 20.f, 20.f);
 
-	//pRC->AddCollisionFunction(CS_ENTER, this,
-	//	&CPlayer::Hit);
+	pRC->AddCollisionFunction(CS_ENTER, this, &CPlayer::Hit);
 	//pRC->AddCollisionFunction(CS_STAY, this,
 	//	&CPlayer::HitStay);
 
-	SAFE_RELEASE(pColl);
+	SAFE_RELEASE(pRC);
 
 	CAnimation* pAni = CreateAnimation("Player" + strPN + "Animation");
 
@@ -193,11 +193,6 @@ void CPlayer::Input(float fDeltaTime)
 	if (KEYDOWN("Fire"))
 	{
 	}
-
-	if (KEYDOWN("Skill1"))
-	{
-		MessageBox(NULL, L"Skill1", L"Skill1", MB_OK);
-	}
 }
 
 int CPlayer::Update(float fDeltaTime)
@@ -213,6 +208,16 @@ int CPlayer::Update(float fDeltaTime)
 int CPlayer::LateUpdate(float fDeltaTime)
 {
 	CObj::LateUpdate(fDeltaTime);
+
+	if (m_tPos.x < 40.f)
+		m_tPos.x = 40.f;
+	if (m_tPos.x > 600.f)
+		m_tPos.x = 600.f;
+	if (m_tPos.y < 61.f)
+		m_tPos.y = 61.f;
+	if (m_tPos.y > 541.f)
+		m_tPos.y = 541.f;
+
 	return 0;
 }
 
@@ -238,4 +243,11 @@ void CPlayer::Move(float x, float y, float fDeltaTime)
 	m_tPos.x += x * fDeltaTime;
 	m_tPos.y += y * fDeltaTime;
 	m_bMove = true;
+}
+
+void CPlayer::Hit(CCollider * pSrc, CCollider * pDest, float fDeltaTime)
+{/*
+	if (pDest->GetTag() == "StageColl")
+	{
+	}*/
 }
