@@ -23,6 +23,9 @@ private:
 	std::vector<class CTile*> m_vecTile;
 	std::vector<class CBlock*> m_vecBlock;
 
+	bool	m_bTileVisible = false;
+	bool	m_bBlockVisible = false;
+
 public:
 	void CreateTile(int iNumX, int iNumY, int iSize,
 		const string& strKey = "", const wchar_t* pFileName = NULL,
@@ -33,6 +36,15 @@ public:
 		const string& strKey = "", const wchar_t* pFileName = NULL,
 		const string& strPathKey = TEXTURE_PATH);
 	void SetBlock(const POSITION & tPos, const string & strTag, BLOCK_TYPE eBT, int iHeight);
+	void SetTileVisible(bool bFlag)
+	{
+		m_bTileVisible = bFlag;
+	}	
+	void SetBlockVisible(bool bFlag)
+	{
+		m_bBlockVisible = bFlag;
+	}
+
 
 public:
 	virtual bool Init();

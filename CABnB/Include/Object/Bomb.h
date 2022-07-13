@@ -1,19 +1,23 @@
 #pragma once
-#include "Object/Obj.h"
+#include "Obj.h"
+#include "Player.h"
+
 class CBomb :
 	public CObj
 {
 
 public:
 	CBomb();
-	CBomb(const CBomb & block);
+	CBomb(const CBomb & bomb);
 	~CBomb();
 
 private:
-	float		m_fLifeTime;
+	float			m_fLifeTime;
+	int				m_iRange;
+	class CPlayer*	m_pPlayer;
 
 public:
-	void SetLifeTile(float fLifeTime)
+	void SetLifeTime(float fLifeTime)
 	{
 		m_fLifeTime += fLifeTime;
 	}
@@ -22,6 +26,23 @@ public:
 		return m_fLifeTime;
 	}
 
+	void SetPlayer(CPlayer* player)
+	{
+		m_pPlayer = player;
+	}
+	CPlayer* GetPlayer() const
+	{
+		return m_pPlayer;
+	}
+
+	void SetRange(int range)
+	{
+		m_iRange = range;
+	}
+	int GetRange() const
+	{
+		return m_iRange;
+	}
 
 public:
 	virtual bool Init();
@@ -31,4 +52,7 @@ public:
 	virtual void Collision(float fDeltaTime);
 	virtual void Render(HDC hDC, float fDeltaTime);
 	virtual CBomb* Clone();
+
+public:
+	void Explosion();
 };

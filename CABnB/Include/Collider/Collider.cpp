@@ -81,16 +81,16 @@ void CCollider::Load(FILE * pFile)
 
 bool CCollider::CollisionRectToRect(const RECTANGLE & src, const RECTANGLE & dest)
 {
-	if (src.l > dest.r)
+	if (src.l >= dest.r)
 		return false;
 
-	else if (src.r < dest.l)
+	else if (src.r <= dest.l)
 		return false;
 
-	else if (src.t > dest.b)
+	else if (src.t >= dest.b)
 		return false;
 
-	else if (src.b < dest.t)
+	else if (src.b <= dest.t)
 		return false;
 
 	return true;

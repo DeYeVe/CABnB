@@ -53,6 +53,7 @@ void CStage::CreateTile(int iNumX, int iNumY,
 		{
 			CTile* pTile = CObj::CreateObj<CTile>("Tile");
 
+			pTile->SetObjTag("Tile");
 			pTile->SetSize(iSize, iSize);
 			pTile->SetPos(GetPos().x + j * iSize, GetPos().y + i * iSize);
 
@@ -96,10 +97,11 @@ void CStage::CreateBlock(int iNumX, int iNumY,
 		for (int j = 0; j < iNumX; ++j)
 		{
 			CBlock* pBlock = CObj::CreateObj<CBlock>("Block");
-
+			
+			pBlock->SetObjTag("Block");
 			pBlock->SetSize(iSize, iSize);
 			pBlock->SetPos(GetPos().x + j * iSize, GetPos().y + i * iSize);
-
+			pBlock->SetBlockType(BT_BLANK);
 			pBlock->SetTexture(strKey, pFileName, strPathKey);
 			pBlock->SetColorKey(200, 200, 200);
 
@@ -203,6 +205,17 @@ void CStage::Render(HDC hDC, float fDeltaTime)
 				SRCCOPY);
 		}
 	}
+
+	if (m_bTileVisible)
+		for (size_t i = 0; i < m_vecTile.size(); ++i)
+		{
+			m_vecTile[i]->Render(hDC, fDeltaTime);
+		}
+	if (m_bBlockVisible)
+		for (size_t i = 0; i < m_vecBlock.size(); ++i)
+		{
+			m_vecBlock[i]->Render(hDC, fDeltaTime);
+		}
 }
 
 CStage * CStage::Clone()

@@ -52,8 +52,10 @@ bool CInGameScene::Init()
 	std::vector<class CBlock*> vecBlock = pStage->GetVecBlock();
 	for (size_t i = 0; i < vecBlock.size(); ++i)
 	{
-		pLayer->AddObject(vecBlock[i]);
+		if(!(vecBlock[i]->GetBlockType() == BT_BLANK) && !(vecBlock[i]->GetBlockType() == BT_START))
+			pLayer->AddObject(vecBlock[i]);
 	}
+	pStage->SetTileVisible(true);
 
 	//// Default
 	// 1P
@@ -66,15 +68,7 @@ bool CInGameScene::Init()
 	CPlayer* pPlayer2 = CObj::CreateObj<CPlayer>("Player2", pLayer);
 	pPlayer2->SetPos(tStartPos);
 
-	//////Pixel
-	//CColliderPixel* pPixel = pBackPanel->AddCollider<CColliderPixel>("StageColl");
-
-	//pPixel->SetPixelInfo("bg/InGame.bmp");
-
-	//SAFE_RELEASE(pPixel);
-
 	SAFE_RELEASE(pStage);
-
 	SAFE_RELEASE(pPlayer1);
 	SAFE_RELEASE(pPlayer2);
 

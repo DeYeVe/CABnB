@@ -20,6 +20,8 @@ private:
 	int			m_iBomb;
 	int			m_iRange;
 
+	bool		m_bPossiblePlant;
+
 private:
 	vector<string> m_strArrowKeys;
 
@@ -57,13 +59,11 @@ public:
 		if (m_fSpeed > 144.f)
 			m_fSpeed = 144.f;
 	}
-	void AddiBomb(int iBomb)
+	void AddBomb(int iBomb)
 	{
 		m_iBomb += iBomb;
 		if (m_iBomb > 6)
 			m_iBomb = 6;
-		if (m_iBomb < 1)
-			m_iBomb = 1;
 	}
 	void AddRange(int iRange)
 	{
@@ -95,9 +95,6 @@ public:
 	}
 
 public:
-	void Move(float x, float y, float fDeltaTime);
-
-public:
 	virtual bool Init();
 	virtual void Input(float fDeltaTime);
 	virtual int Update(float fDeltaTime);
@@ -114,7 +111,13 @@ private:
 
 		return wstr;
 	}
+
+public:
+	void Move(float x, float y, float fDeltaTime);
+	void Plant();
+
 public:
 	void Hit(CCollider * pSrc, CCollider * pDest, float fDeltaTime);
+	void HitStay(CCollider * pSrc, CCollider * pDest, float fDeltaTime);
 };
 

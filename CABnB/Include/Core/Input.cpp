@@ -42,11 +42,13 @@ bool CInput::Init(HWND hWnd)
 	AddKey('F', "1P_MoveDown");
 	AddKey('G', "1P_MoveRight");
 	AddKey('R', "1P_MoveUp");
+	AddKey(VK_LSHIFT, "1P_Plant");
 
 	AddKey(VK_LEFT, "2P_MoveLeft");
 	AddKey(VK_DOWN, "2P_MoveDown");
 	AddKey(VK_RIGHT, "2P_MoveRight");
 	AddKey(VK_UP, "2P_MoveUp");
+	AddKey(VK_RSHIFT, "2P_Plant");
 
 	AddKey(VK_LBUTTON, "MouseLButton");
 	AddKey(VK_RBUTTON, "MouseRButton");

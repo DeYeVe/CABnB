@@ -48,6 +48,9 @@ bool CMapEditScene::Init()
 
 	m_pStage = CObj::CreateObj<CStage>("Stage", pStageLayer);
 
+	m_pStage->SetTileVisible(true);
+	m_pStage->SetBlockVisible(true);
+
 	m_pStage->CreateTile(15, 13, 40, "BlankTile", L"Tile/BlankTile.bmp");
 	m_pStage->CreateBlock(15, 13, 40, "BlankBlockCK", L"Tile/BlankBlock.bmp");
 	m_bIsTile = true;

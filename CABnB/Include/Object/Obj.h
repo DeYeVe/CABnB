@@ -18,6 +18,7 @@ protected:
 
 private:
 	static list<CObj*>	m_ObjList;
+	string			m_strObjTag;
 
 public:
 	static void AddObj(CObj* pObj);
@@ -41,6 +42,11 @@ public:
 		m_pLayer = pLayer;
 	}
 
+	void SetObjTag(string strTag)
+	{
+		m_strObjTag = strTag;
+	}
+
 	class CScene* GetScene()	const
 	{
 		return m_pScene;
@@ -49,6 +55,11 @@ public:
 	class CLayer* GetLayer()	const
 	{
 		return m_pLayer;
+	}
+
+	string GetObjTag()	const
+	{
+		return m_strObjTag;
 	}
 
 protected:

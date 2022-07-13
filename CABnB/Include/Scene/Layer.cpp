@@ -147,6 +147,7 @@ void CLayer::Collision(float fDeltaTime)
 		else
 		{
 			GET_SINGLE(CCollisionManager)->AddObject(*iter);
+			(*iter)->Collision(fDeltaTime);
 
 			++iter;
 		}

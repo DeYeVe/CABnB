@@ -150,7 +150,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
-    <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Collider\Collider.cpp" />
     <ClCompile Include="Collider\ColliderPixel.cpp" />
     <ClCompile Include="Collider\ColliderPoint.cpp" />
@@ -165,10 +164,13 @@
     <ClCompile Include="Core\Timer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\Block.cpp" />
+    <ClCompile Include="Object\Bomb.cpp" />
+    <ClCompile Include="Object\Item.cpp" />
     <ClCompile Include="Object\Mouse.cpp" />
     <ClCompile Include="Object\Obj.cpp" />
     <ClCompile Include="Object\Player.cpp" />
     <ClCompile Include="Object\Stage.cpp" />
+    <ClCompile Include="Object\Stream.cpp" />
     <ClCompile Include="Object\Tile.cpp" />
     <ClCompile Include="Object\UI.cpp" />
     <ClCompile Include="Object\UIButton.cpp" />
@@ -185,7 +187,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
-    <ClInclude Include="Bomb.h" />
     <ClInclude Include="Collider\Collider.h" />
     <ClInclude Include="Collider\ColliderPixel.h" />
     <ClInclude Include="Collider\ColliderPoint.h" />
@@ -202,10 +203,13 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="Object\Block.h" />
+    <ClInclude Include="Object\Bomb.h" />
+    <ClInclude Include="Object\Item.h" />
     <ClInclude Include="Object\Mouse.h" />
     <ClInclude Include="Object\Obj.h" />
     <ClInclude Include="Object\Player.h" />
     <ClInclude Include="Object\Stage.h" />
+    <ClInclude Include="Object\Stream.h" />
     <ClInclude Include="Object\Tile.h" />
     <ClInclude Include="Object\UI.h" />
     <ClInclude Include="Object\UIButton.h" />

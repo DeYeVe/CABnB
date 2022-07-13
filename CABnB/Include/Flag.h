@@ -73,3 +73,13 @@ enum BLOCK_TYPE
 	BT_BLANK,
 	BT_START
 };
+
+// Item Type
+enum ITEM_TYPE
+{
+	IT_BOMB,
+	IT_RANGE,
+	IT_SPEED,
+	IT_ULTRA,
+	IT_END
+};

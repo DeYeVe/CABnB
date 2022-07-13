@@ -168,11 +168,17 @@
     <ClCompile Include="Scene\InGameScene.cpp">
       <Filter>02. Scene\02. Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Bomb.cpp">
-      <Filter>03. Object\02. Bomb</Filter>
-    </ClCompile>
     <ClCompile Include="Collider\ColliderPixel.cpp">
       <Filter>05. Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Item.cpp">
+      <Filter>03. Object\03. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bomb.cpp">
+      <Filter>03. Object\02. Bomb</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Stream.cpp">
+      <Filter>03. Object\02. Bomb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,11 +290,17 @@
     <ClInclude Include="Scene\InGameScene.h">
       <Filter>02. Scene\02. Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Bomb.h">
-      <Filter>03. Object\02. Bomb</Filter>
-    </ClInclude>
     <ClInclude Include="Collider\ColliderPixel.h">
       <Filter>05. Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Item.h">
+      <Filter>03. Object\03. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bomb.h">
+      <Filter>03. Object\02. Bomb</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Stream.h">
+      <Filter>03. Object\02. Bomb</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

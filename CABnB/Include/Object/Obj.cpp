@@ -405,6 +405,15 @@ void CObj::Save(FILE * pFile)
 	// Tag 문자열 저장
 	fwrite(m_strTag.c_str(), 1, iLength, pFile);
 
+	// Tag 정보 저장
+	iLength = m_strObjTag.length();
+
+	// Tag 길이 저장
+	fwrite(&iLength, 4, 1, pFile);
+
+	// Tag 문자열 저장
+	fwrite(m_strObjTag.c_str(), 1, iLength, pFile);
+
 	// 물리 사용 여부 저장
 	fwrite(&m_bIsPhysics, 1, 1, pFile);
 
@@ -506,6 +515,18 @@ void CObj::Load(FILE * pFile)
 	fread(strText, 1, iLength, pFile);
 	strText[iLength] = 0;
 	m_strTag = strText;
+
+	// Tag 정보 저장
+	iLength = 0;
+	char strText2[MAX_PATH] = {};
+
+	// Tag 길이 로드
+	fread(&iLength, 4, 1, pFile);
+
+	// Tag 문자열 로드
+	fread(strText2, 1, iLength, pFile);
+	strText2[iLength] = 0;
+	m_strObjTag = strText2;
 
 	// 물리 사용 여부 로드
 	fread(&m_bIsPhysics, 1, 1, pFile);
