@@ -21,6 +21,10 @@ private:
 	int			m_iRange;
 
 	bool		m_bPossiblePlant;
+	bool		m_bIsWrapped;
+	bool		m_bIsDead;
+	float		m_fTimeWrapped;
+	float		m_fTimeDead;
 
 private:
 	vector<string> m_strArrowKeys;
@@ -68,8 +72,8 @@ public:
 	void AddRange(int iRange)
 	{
 		m_iRange += iRange;
-		if (m_iRange > 7)
-			m_iRange = 7;
+		if (m_iRange > 8)
+			m_iRange = 8;
 	}
 
 public:
@@ -115,6 +119,7 @@ private:
 public:
 	void Move(float x, float y, float fDeltaTime);
 	void Plant();
+	void GetWrapped();
 
 public:
 	void Hit(CCollider * pSrc, CCollider * pDest, float fDeltaTime);

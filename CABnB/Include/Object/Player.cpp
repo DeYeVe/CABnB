@@ -7,6 +7,7 @@
 #include "../Scene/SceneManager.h"
 #include "../Object/Block.h"
 #include "../Object/Bomb.h"
+#include "../Object/Item.h"
 
 CPlayer::CPlayer()
 {
@@ -30,10 +31,14 @@ bool CPlayer::Init()
 	SetImageOffset(0.f, 0.f);
 	SetDir(DIR_DOWN);
 	SetSpeed(80.f);
-	SetBomb(3);
-	SetRange(3);
+	SetBomb(1);
+	SetRange(2);
 	SetObjTag("Player");
 	m_bPossiblePlant = true;
+	m_bIsWrapped = false;
+	m_fTimeWrapped = 0.f;
+	m_bIsDead = false;
+	m_fTimeDead = 0.f;
 
 	if (CObj::FindObject("Player1"))
 		m_iPlayerNumber = 2;
@@ -116,6 +121,42 @@ bool CPlayer::Init()
 	SetAnimationClipColorKey(strPN + "P_MoveRight", 255, 0, 255);
 	vecFileName.clear();
 
+	AddAnimationClip(strPN + "P_Wrapped_1", AT_ATLAS, AO_LOOP, 0.23f, 2, 1,
+		0, 0, 2, 1, 0.f, strPN + "P_Wrapped_1", StringToWstring("Player/" + strPN + "P/wrapped_1.bmp").c_str());
+	SetAnimationClipColorKey(strPN + "P_Wrapped_1", 255, 0, 255);
+
+	AddAnimationClip(strPN + "P_Wrapped_2", AT_ATLAS, AO_LOOP, 2.1f, 3, 1,
+		0, 0, 3, 1, 0.f, strPN + "P_Wrapped_2", StringToWstring("Player/" + strPN + "P/wrapped_2.bmp").c_str());
+	SetAnimationClipColorKey(strPN + "P_Wrapped_2", 255, 0, 255);
+
+	AddAnimationClip(strPN + "P_Wrapped_3", AT_ATLAS, AO_LOOP, 0.3f, 2, 1,
+		0, 0, 2, 1, 0.f, strPN + "P_Wrapped_3", StringToWstring("Player/" + strPN + "P/wrapped_3.bmp").c_str());
+	SetAnimationClipColorKey(strPN + "P_Wrapped_3", 255, 0, 255);
+
+	AddAnimationClip(strPN + "P_Die_1", AT_ATLAS, AO_LOOP, 1.f, 6, 1,
+		0, 0, 6, 1, 0.f, strPN + "P_Die_1", StringToWstring("Player/" + strPN + "P/die_1.bmp").c_str());
+	SetAnimationClipColorKey(strPN + "P_Die_1", 255, 0, 255);
+
+	AddAnimationClip(strPN + "P_Die_2", AT_ATLAS, AO_LOOP, 0.25f, 2, 1,
+		0, 0, 2, 1, 0.f, strPN + "P_Die_2", StringToWstring("Player/" + strPN + "P/die_2.bmp").c_str());
+	SetAnimationClipColorKey(strPN + "P_Die_2", 255, 0, 255);
+
+	AddAnimationClip(strPN + "P_Die_3", AT_ATLAS, AO_LOOP, 0.25f, 2, 1,
+		0, 0, 2, 1, 0.f, strPN + "P_Die_3", StringToWstring("Player/" + strPN + "P/die_3.bmp").c_str());
+	SetAnimationClipColorKey(strPN + "P_Die_3", 255, 0, 255);
+
+	AddAnimationClip(strPN + "P_Die_4", AT_ATLAS, AO_LOOP, 0.25f, 2, 1,
+		0, 0, 2, 1, 0.f, strPN + "P_Die_4", StringToWstring("Player/" + strPN + "P/die_4.bmp").c_str());
+	SetAnimationClipColorKey(strPN + "P_Die_4", 255, 0, 255);
+
+	AddAnimationClip(strPN + "P_Die_5", AT_ATLAS, AO_LOOP, 0.25f, 2, 1,
+		0, 0, 2, 1, 0.f, strPN + "P_Die_5", StringToWstring("Player/" + strPN + "P/die_5.bmp").c_str());
+	SetAnimationClipColorKey(strPN + "P_Die_5", 255, 0, 255);
+
+	AddAnimationClip(strPN + "P_Die_6", AT_ATLAS, AO_LOOP, 0.25f, 2, 1,
+		0, 0, 2, 1, 0.f, strPN + "P_Die_6", StringToWstring("Player/" + strPN + "P/die_6.bmp").c_str());
+	SetAnimationClipColorKey(strPN + "P_Die_6", 255, 0, 255);
+
 	SAFE_RELEASE(pAni);
 
 	return true;
@@ -174,33 +215,45 @@ void CPlayer::Input(float fDeltaTime)
 		if (m_strArrowKeys.back() == "Left")
 		{
 			Move(-m_fSpeed, 0, fDeltaTime);
-			m_pAnimation->ChangeClip(strPN + "P_" + "MoveLeft");
-			m_pAnimation->SetDefaultClip(strPN + "P_" + "StopLeft");
 			m_eDir = DIR_LEFT;
+			if (!m_bIsWrapped)
+			{
+				m_pAnimation->ChangeClip(strPN + "P_" + "MoveLeft");
+				m_pAnimation->SetDefaultClip(strPN + "P_" + "StopLeft");
+			}
 		}
 
 		if (m_strArrowKeys.back() == "Right")
 		{
 			Move(m_fSpeed, 0, fDeltaTime);
-			m_pAnimation->ChangeClip(strPN + "P_" + "MoveRight");
-			m_pAnimation->SetDefaultClip(strPN + "P_" + "StopRight");
 			m_eDir = DIR_RIGHT;
+			if (!m_bIsWrapped)
+			{
+				m_pAnimation->ChangeClip(strPN + "P_" + "MoveRight");
+				m_pAnimation->SetDefaultClip(strPN + "P_" + "StopRight");
+			}
 		}
 
 		if (m_strArrowKeys.back() == "Up")
 		{
 			Move(0, -m_fSpeed, fDeltaTime);
-			m_pAnimation->ChangeClip(strPN + "P_" + "MoveUp");
-			m_pAnimation->SetDefaultClip(strPN + "P_" + "StopUp");
 			m_eDir = DIR_UP;
+			if (!m_bIsWrapped)
+			{
+				m_pAnimation->ChangeClip(strPN + "P_" + "MoveUp");
+				m_pAnimation->SetDefaultClip(strPN + "P_" + "StopUp");
+			}
 		}
 
 		if (m_strArrowKeys.back() == "Down")
 		{
 			Move(0, m_fSpeed, fDeltaTime);
-			m_pAnimation->ChangeClip(strPN + "P_" + "MoveDown");
-			m_pAnimation->SetDefaultClip(strPN + "P_" + "StopDown");
 			m_eDir = DIR_DOWN;
+			if (!m_bIsWrapped)
+			{
+				m_pAnimation->ChangeClip(strPN + "P_" + "MoveDown");
+				m_pAnimation->SetDefaultClip(strPN + "P_" + "StopDown");
+			}
 		}
 	}
 
@@ -213,6 +266,59 @@ void CPlayer::Input(float fDeltaTime)
 int CPlayer::Update(float fDeltaTime)
 {
 	CObj::Update(fDeltaTime);
+
+	if (m_bIsDead)
+	{
+		if (m_fTimeDead < 0.3f)
+		{
+			string strPN = to_string(m_iPlayerNumber);
+			m_pAnimation->ChangeClip(strPN + "P_Wrapped_3");
+			SetSize(65.f, 100.f);
+
+		}
+		else if (m_fTimeDead < 4.8f)
+		{
+			string strPN = to_string(m_iPlayerNumber);
+			int iNum = (int)((m_fTimeDead - 0.3f ) / 0.75) + 1;
+			m_pAnimation->ChangeClip(strPN + "P_Die_" + to_string(iNum));
+			SetSize(48.f, 100.f);
+
+		}
+		else
+		{
+			Die();
+			//game end;	
+		}
+
+		m_fTimeDead += fDeltaTime;
+		return 0;
+	}
+	else if (m_bIsWrapped)
+	{
+		if (m_fTimeWrapped < 4.6f)
+		{ 
+			if (m_fTimeWrapped == 0.f)
+			{
+				string strPN = to_string(m_iPlayerNumber);
+				m_pAnimation->ChangeClip(strPN + "P_Wrapped_1");
+				SetSize(60.f, 60.f);
+			}
+		}
+		else if (m_fTimeWrapped < 6.f)
+		{
+			string strPN = to_string(m_iPlayerNumber);
+			m_pAnimation->ChangeClip(strPN + "P_Wrapped_2");
+			SetSize(60.f, 60.f);
+		}
+		else
+		{
+			m_bIsDead = true;
+			SetPos(GetPos().x, GetPos().y - 40.f);
+		}
+
+		m_fTimeWrapped += fDeltaTime;
+		return 0;
+	}
 
 	if (!m_bMove)
 		m_pAnimation->ReturnClip();
@@ -257,13 +363,31 @@ CPlayer * CPlayer::Clone()
 
 void CPlayer::Move(float x, float y, float fDeltaTime)
 {
-	m_tPos.x += x * fDeltaTime;
-	m_tPos.y += y * fDeltaTime;
+	if (m_bIsDead)
+		return;
+
+	if (m_bIsWrapped)
+	{
+		m_tPos.x += (x / m_fSpeed) *  (10.f / 0.6f) * fDeltaTime;
+		m_tPos.y += (y / m_fSpeed) *  (10.f / 0.6f) * fDeltaTime;
+	}
+	else 
+	{
+		m_tPos.x += x * fDeltaTime;
+		m_tPos.y += y * fDeltaTime;
+	}
+
 	m_bMove = true;
 }
 
 void CPlayer::Plant()
 {
+	if (m_bIsDead)
+		return;
+
+	if (m_bIsWrapped)
+		return;
+
 	if (!m_bPossiblePlant)
 		return;
 
@@ -297,8 +421,16 @@ void CPlayer::Plant()
 	SAFE_RELEASE(pBomb);
 }
 
+void CPlayer::GetWrapped()
+{
+	m_bIsWrapped = true;
+}
+
 void CPlayer::Hit(CCollider * pSrc, CCollider * pDest, float fDeltaTime)
 {
+	if (m_bIsDead)
+		return;
+
 	CObj* pDestObj = pDest->GetObj();
 	string strDestObjTag = pDestObj->GetObjTag();
 	RECTANGLE tSrcRect = ((CColliderRect*)pSrc)->GetWorldInfo();
@@ -413,38 +545,43 @@ void CPlayer::Hit(CCollider * pSrc, CCollider * pDest, float fDeltaTime)
 
 		//left
 		if (tSrcRect.r > tDestRect.l && tSrcRect.r < tDestRect.l + 2.f &&
-			abs(tSrcRect.l - tDestRect.l) > abs(tSrcRect.t - tDestRect.t) && m_eDir == DIR_RIGHT && m_bMove)
+			abs(tSrcRect.l - tDestRect.l) > abs(tSrcRect.t - tDestRect.t) && m_eDir && m_bMove)
 		{
 			SetPos(GetPos().x - m_fSpeed * fDeltaTime, GetPos().y);
 		}
 		//right
 		else if (tSrcRect.l < tDestRect.r && tSrcRect.l + 2.f > tDestRect.r &&
-			abs(tSrcRect.l - tDestRect.l) > abs(tSrcRect.t - tDestRect.t) && m_eDir == DIR_LEFT && m_bMove)
+			abs(tSrcRect.l - tDestRect.l) > abs(tSrcRect.t - tDestRect.t) && m_eDir&& m_bMove)
 		{
 			SetPos(GetPos().x + m_fSpeed * fDeltaTime, GetPos().y);
 		}
 		//top
 		else if (tSrcRect.b > tDestRect.t && tSrcRect.b < tDestRect.t + 2.f &&
-			abs(tSrcRect.t - tDestRect.t) > abs(tSrcRect.l - tDestRect.l) && m_eDir == DIR_DOWN && m_bMove)
+			abs(tSrcRect.t - tDestRect.t) > abs(tSrcRect.l - tDestRect.l) && m_eDir&& m_bMove)
 		{
 			SetPos(GetPos().x, GetPos().y - m_fSpeed * fDeltaTime);
 		}
 		//bottom
 		else if (tSrcRect.t < tDestRect.b && tSrcRect.t + 2.f > tDestRect.b &&
-			abs(tSrcRect.t - tDestRect.t) > abs(tSrcRect.l - tDestRect.l) && m_eDir == DIR_UP && m_bMove)
+			abs(tSrcRect.t - tDestRect.t) > abs(tSrcRect.l - tDestRect.l) && m_eDir&& m_bMove)
 		{
 			SetPos(GetPos().x, GetPos().y + m_fSpeed * fDeltaTime);
 		}
 	}
+	else if (strDestObjTag == "Stream")
+	{
+		if (!(abs(tSrcRect.l - tDestRect.l) < 20.f && abs(tSrcRect.t - tDestRect.t) < 20.f))
+			return;
 
-	//else if (strDestObjTag == "Item")
-	//{
-	//ITEM_TYPE eItemType = ((CItem*)pDestObj)->GetItemType();
-	//}
+		GetWrapped();
+	}
 }
 
 void CPlayer::HitStay(CCollider * pSrc, CCollider * pDest, float fDeltaTime)
 {
+	if (m_bIsDead)
+		return;
+
 	CObj* pDestObj = pDest->GetObj();
 	string strDestObjTag = pDestObj->GetObjTag();
 	RECTANGLE tSrcRect = ((CColliderRect*)pSrc)->GetWorldInfo();
@@ -566,27 +703,70 @@ void CPlayer::HitStay(CCollider * pSrc, CCollider * pDest, float fDeltaTime)
 
 		//left
 		if (tSrcRect.r > tDestRect.l && tSrcRect.r < tDestRect.l + 2.f && 
-			abs(tSrcRect.l - tDestRect.l) > abs(tSrcRect.t - tDestRect.t) && m_eDir == DIR_RIGHT && m_bMove)
+			abs(tSrcRect.l - tDestRect.l) > abs(tSrcRect.t - tDestRect.t) && m_bMove)
 		{
 			SetPos(GetPos().x - m_fSpeed * fDeltaTime, GetPos().y);
 		}
 		//right
 		else if (tSrcRect.l < tDestRect.r && tSrcRect.l + 2.f > tDestRect.r &&
-			abs(tSrcRect.l - tDestRect.l) > abs(tSrcRect.t - tDestRect.t) && m_eDir == DIR_LEFT && m_bMove)
+			abs(tSrcRect.l - tDestRect.l) > abs(tSrcRect.t - tDestRect.t) && m_bMove)
 		{
 			SetPos(GetPos().x + m_fSpeed * fDeltaTime, GetPos().y);
 		}
 		//top
 		else if (tSrcRect.b > tDestRect.t && tSrcRect.b < tDestRect.t + 2.f && 
-			abs(tSrcRect.t - tDestRect.t) > abs(tSrcRect.l - tDestRect.l) && m_eDir == DIR_DOWN && m_bMove)
+			abs(tSrcRect.t - tDestRect.t) > abs(tSrcRect.l - tDestRect.l) && m_bMove)
 		{
 			SetPos(GetPos().x, GetPos().y - m_fSpeed * fDeltaTime);
 		}
 		//bottom
 		else if (tSrcRect.t < tDestRect.b && tSrcRect.t + 2.f > tDestRect.b && 
-			abs(tSrcRect.t - tDestRect.t) > abs(tSrcRect.l - tDestRect.l) && m_eDir == DIR_UP && m_bMove)
+			abs(tSrcRect.t - tDestRect.t) > abs(tSrcRect.l - tDestRect.l) && m_bMove)
 		{
 			SetPos(GetPos().x, GetPos().y + m_fSpeed * fDeltaTime);
+		}
+	}
+	else if (strDestObjTag == "Item")
+	{
+		if (!(abs(tSrcRect.l - tDestRect.l) < 20.f && abs(tSrcRect.t - tDestRect.t) < 20.f))
+			return;
+
+		ITEM_TYPE eItemType = ((CItem*)pDestObj)->GetItemType();
+
+		if (eItemType == IT_BOMB)
+		{
+			pDestObj->Die();
+			AddBomb(1);
+		}
+		else if (eItemType == IT_RANGE)
+		{
+			pDestObj->Die();
+			AddRange(1);
+		}
+		else if (eItemType == IT_SPEED)
+		{
+			pDestObj->Die();
+			AddSpeed();
+		}
+		else if (eItemType == IT_ULTRA)
+		{
+			pDestObj->Die();
+			AddRange(8);
+		}
+	}
+	else if (strDestObjTag == "Stream")
+	{
+		if (!(abs(tSrcRect.l - tDestRect.l) < 20.f && abs(tSrcRect.t - tDestRect.t) < 20.f))
+			return;
+
+		GetWrapped();
+	}
+	else if (strDestObjTag == "Player")
+	{
+		if (m_bIsWrapped)
+		{
+			m_bIsDead = true;
+			//game end;
 		}
 	}
 }

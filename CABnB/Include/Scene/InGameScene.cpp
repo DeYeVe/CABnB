@@ -31,9 +31,11 @@ bool CInGameScene::Init()
 		return false;
 
 	//// UI
-	CLayer* pUILayer = FindLayer("UI");
 
-	CUIPanel*	pBackPanel = CObj::CreateObj<CUIPanel>("BackPanel", pUILayer);
+	//// Frame
+	CLayer* pFrameLayer = FindLayer("Frame");
+
+	CUIPanel*	pBackPanel = CObj::CreateObj<CUIPanel>("BackPanel", pFrameLayer);
 
 	pBackPanel->SetSize(GETRESOLUTION.iW, GETRESOLUTION.iH);
 	pBackPanel->SetTexture("InGame", L"bg/InGame.bmp");

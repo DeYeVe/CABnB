@@ -9,7 +9,8 @@ CScene::CScene()
 {
 	CLayer*	pLayer = CreateLayer("UI", INT_MAX - 2);
 	pLayer = CreateLayer("HUD", INT_MAX);
-	pLayer = CreateLayer("Default", 2);
+	pLayer = CreateLayer("Default", 3);
+	pLayer = CreateLayer("Frame", 2);
 	pLayer = CreateLayer("Stage", 1);
 	m_eSceneType = SC_CURRENT;
 }

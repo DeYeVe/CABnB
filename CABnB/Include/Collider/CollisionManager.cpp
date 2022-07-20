@@ -36,16 +36,24 @@ void CCollisionManager::Collision(float fDeltaTime)
 
 	for (iter = m_CollisionList.begin(); iter != iterEnd; ++iter)
 	{
-		if ((*iter)->GetTag() == "Block" || (*iter)->GetTag() == "Item")
-			continue;
+		//if ((*iter)->GetTag() == "Block" || (*iter)->GetTag() == "Item")
+		//{
+		//		continue;
+		//}
+			
 		list<CObj*>::iterator	iter1 = iter;
 		++iter1;
 		list<CObj*>::iterator	iter1End = m_CollisionList.end();
 		for (; iter1 != iter1End; ++iter1)
 		{
-			if ((*iter)->GetTag() == "Block" || (*iter)->GetTag() == "Item")
+			if ((*iter1)->GetTag() == "Block")
 			{
-				if (CMath::Distance((*iter)->GetPos(), (*iter1)->GetPos()) < 42.f)
+				if (CMath::Distance((*iter)->GetPos(), (*iter1)->GetPos()) < 82.f)
+					Collision(*iter, *iter1, fDeltaTime);
+			}
+			else if ((*iter1)->GetTag() == "Item")
+			{
+				if (CMath::Distance((*iter)->GetPos(), (*iter1)->GetPos()) < 80.f)
 					Collision(*iter, *iter1, fDeltaTime);
 			}
 			else

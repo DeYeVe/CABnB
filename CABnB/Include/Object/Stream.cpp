@@ -5,6 +5,7 @@
 #include "../Collider/ColliderRect.h"
 #include "Block.h"
 #include "Item.h"
+#include "../Core/Math.h"
 
 CStream::CStream() :
 	m_fLifeTime(0.f)
@@ -234,6 +235,11 @@ void CStream::Hit(CCollider * pSrc, CCollider * pDest, float fDeltaTime)
 			pDestObj->Die();
 			SetRange(0);
 
+			int iRand = CMath::RandInt();
+
+			if (iRand > 33)
+				return;
+
 			POSITION pPos = GetPos();
 			pPos.y -= 20;
 
@@ -241,7 +247,17 @@ void CStream::Hit(CCollider * pSrc, CCollider * pDest, float fDeltaTime)
 
 			CItem* pItem = CObj::CreateObj<CItem>("Item", pLayer);
 			pItem->SetObjTag("Item");
-			pItem->SetItemType(IT_SPEED);
+
+			iRand = CMath::RandInt();
+			if(iRand % 10 < 3)
+				pItem->SetItemType(IT_SPEED);
+			else if (iRand % 10 < 6)
+				pItem->SetItemType(IT_BOMB);
+			else if (iRand % 10 < 9)
+				pItem->SetItemType(IT_RANGE);
+			else if(iRand % 10 < 10)
+				pItem->SetItemType(IT_ULTRA);
+				
 			pItem->SetPos(pPos);
 
 			SAFE_RELEASE(pItem);
@@ -258,9 +274,5 @@ void CStream::Hit(CCollider * pSrc, CCollider * pDest, float fDeltaTime)
 	else if (strDestObjTag == "Item")
 	{
 		pDestObj->Die();
-	}
-	else if (strDestObjTag == "Player")
-	{
-
 	}
 }
