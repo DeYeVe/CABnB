@@ -87,11 +87,8 @@ bool CCollisionManager::Collision(CObj * pSrc, CObj * pDest, float fDeltaTime)
 
 				(*iterDest)->SetHitPoint((*iterSrc)->GetHitPoint());
 
-				// 충돌 목록에서 이전에 충돌된 적이 없다면
-				// 처음 막 충돌되었다는 의미이다.
 				if (!(*iterSrc)->CheckCollisionList(*iterDest))
 				{
-					// 서로 상대방을 충돌 목록으로 추가한다.
 					(*iterSrc)->AddCollider(*iterDest);
 					(*iterDest)->AddCollider(*iterSrc);
 
@@ -101,7 +98,6 @@ bool CCollisionManager::Collision(CObj * pSrc, CObj * pDest, float fDeltaTime)
 						fDeltaTime);
 				}
 
-				// 기존 충돌된적이 있다면 계속 충돌 상태인 것이다.
 				else
 				{
 					(*iterSrc)->CallFunction(CS_STAY, *iterDest,
@@ -111,11 +107,8 @@ bool CCollisionManager::Collision(CObj * pSrc, CObj * pDest, float fDeltaTime)
 				}
 			}
 
-			// 현재 충돌이 안된 상태에서 이전에 충돌이 되고 있었다면
-			// 이제 막 충돌상태에서 떨어졌다는 의미이다.
 			else if ((*iterSrc)->CheckCollisionList(*iterDest))
 			{
-				// 서로 충돌이 안되므로 충돌목록에서 지워준다.
 				(*iterSrc)->EraseCollisionList(*iterDest);
 				(*iterDest)->EraseCollisionList(*iterSrc);
 

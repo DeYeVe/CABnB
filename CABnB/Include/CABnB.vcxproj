@@ -74,19 +74,23 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../Bin/</OutDir>
     <TargetName>$(ProjectName)_Debug</TargetName>
+    <LibraryPath>../Bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../Bin/</OutDir>
     <TargetName>$(ProjectName)64_Debug</TargetName>
+    <LibraryPath>../Bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../Bin/</OutDir>
+    <LibraryPath>../Bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../Bin/</OutDir>
+    <LibraryPath>../Bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -184,6 +188,7 @@
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\StartScene.cpp" />
+    <ClCompile Include="Sound\SoundManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
@@ -225,6 +230,7 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\StartScene.h" />
+    <ClInclude Include="Sound\SoundManager.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>

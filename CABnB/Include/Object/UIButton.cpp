@@ -1,6 +1,7 @@
 #include "UIButton.h"
 #include "../Collider/ColliderRect.h"
 #include "../Core/Input.h"
+#include "../Sound/SoundManager.h"
 
 CUIButton::CUIButton() :
 	m_bEnableCallback(false),
@@ -22,6 +23,8 @@ CUIButton::~CUIButton()
 
 bool CUIButton::Init()
 {
+	GET_SINGLE(CSoundManager)->LoadSound("Button", false, "se/button.wav");
+
 	CColliderRect* pColl = AddCollider<CColliderRect>("ButtonBody");
 
 	pColl->AddCollisionFunction(CS_ENTER, this, &CUIButton::MouseOn);
@@ -93,6 +96,8 @@ void CUIButton::MouseOn(CCollider * pSrc, CCollider * pDest, float fDeltaTime)
 
 	if (m_bHasOffset)
 		SetImageOffset(m_tSize.x, 0.f);
+
+	GET_SINGLE(CSoundManager)->Play("Button");
 }
 
 void CUIButton::MouseOut(CCollider * pSrc, CCollider * pDest, float fDeltaTime)

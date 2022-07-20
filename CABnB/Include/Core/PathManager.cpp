@@ -35,6 +35,10 @@ bool CPathManager::Init()
 	if (!CreatePath(DATA_PATH, L"Data\\"))
 		return false;
 
+	// Sound 경로 설정
+	if (!CreatePath(SOUND_PATH, L"Sound\\"))
+		return false;
+
 	return true;
 }
 

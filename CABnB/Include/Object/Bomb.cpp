@@ -4,6 +4,7 @@
 #include "../Scene/Scene.h"
 #include "Stream.h"
 #include "../Collider/ColliderRect.h"
+#include "../Sound/SoundManager.h"
 
 CBomb::CBomb() :
 	m_fLifeTime(0.f)
@@ -26,6 +27,8 @@ bool CBomb::Init()
 	SetSize(44.f, 41.f);
 	SetLifeTime(3.f);
 	SetRange(0);
+
+	GET_SINGLE(CSoundManager)->LoadSound("Explode", false, "se/explode.wav");
 
 	CAnimation* pAni = CreateAnimation("BombAnimation");
 
@@ -91,6 +94,8 @@ void CBomb::Explosion()
 	pStream->SetDir(DIR_NONE);
 
 	SAFE_RELEASE(pStream);
+
+	GET_SINGLE(CSoundManager)->Play("Explode");
 
 	Die();
 }

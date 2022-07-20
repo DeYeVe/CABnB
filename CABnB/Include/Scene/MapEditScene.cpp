@@ -15,6 +15,7 @@
 #include "../Object/UIButton.h"
 #include "../Object/Tile.h"
 #include "../Object/Block.h"
+#include "../Sound/SoundManager.h"
 
 wchar_t CMapEditScene::m_strText[MAX_PATH] = {};
 
@@ -351,6 +352,9 @@ void CMapEditScene::Input(float fDeltaTime)
 
 void CMapEditScene::ExitButtonCallback(float fTime, const string & strTag)
 {
+	GET_SINGLE(CSoundManager)->Stop(ST_BGM);
+	GET_SINGLE(CSoundManager)->LoadSound("StartScene", true, "bg/StartScene.mp3");
+	GET_SINGLE(CSoundManager)->Play("StartScene");
 	GET_SINGLE(CSceneManager)->CreateScene<CStartScene>(SC_NEXT);
 }
 

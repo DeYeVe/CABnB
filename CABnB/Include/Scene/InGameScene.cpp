@@ -16,6 +16,7 @@
 #include "../Object/Tile.h"
 #include "../Object/Block.h"
 #include "../Object/Player.h"
+#include "../Sound/SoundManager.h"
 
 CInGameScene::CInGameScene()
 {
@@ -89,4 +90,21 @@ int CInGameScene::LateUpdate(float fDeltaTime)
 	CScene::LateUpdate(fDeltaTime);
 
 	return 0;
+}
+
+void CInGameScene::GameEnd(bool bIsDraw)
+{
+	if (bIsDraw)
+	{
+		GET_SINGLE(CSoundManager)->Stop(ST_BGM);
+		GET_SINGLE(CSoundManager)->LoadSound("Draw", false, "system/draw.wav");
+		GET_SINGLE(CSoundManager)->Play("Draw");
+
+	}
+	else
+	{
+		GET_SINGLE(CSoundManager)->Stop(ST_BGM);
+		GET_SINGLE(CSoundManager)->LoadSound("Win", false, "system/win.wav");
+		GET_SINGLE(CSoundManager)->Play("Win");
+	}
 }

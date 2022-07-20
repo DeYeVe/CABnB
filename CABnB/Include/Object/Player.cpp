@@ -8,6 +8,8 @@
 #include "../Object/Block.h"
 #include "../Object/Bomb.h"
 #include "../Object/Item.h"
+#include "../Sound/SoundManager.h"
+#include "../Scene/IngameScene.h"
 
 CPlayer::CPlayer()
 {
@@ -45,6 +47,9 @@ bool CPlayer::Init()
 	else 
 		m_iPlayerNumber = 1;
 
+	GET_SINGLE(CSoundManager)->LoadSound("Die", false, "se/die.wav");
+	GET_SINGLE(CSoundManager)->LoadSound("Plant", false, "se/plant.wav");
+	GET_SINGLE(CSoundManager)->LoadSound("Get", false, "se/get.wav");
 	
 	string strPN = to_string(m_iPlayerNumber);
 	SetTag("Player" + strPN);
@@ -287,7 +292,6 @@ int CPlayer::Update(float fDeltaTime)
 		else
 		{
 			Die();
-			//game end;	
 		}
 
 		m_fTimeDead += fDeltaTime;
@@ -314,6 +318,8 @@ int CPlayer::Update(float fDeltaTime)
 		{
 			m_bIsDead = true;
 			SetPos(GetPos().x, GetPos().y - 40.f);
+			GET_SINGLE(CSoundManager)->Play("Die");
+			((CInGameScene*)(GET_SINGLE(CSceneManager)->GetScene()))->GameEnd(false);
 		}
 
 		m_fTimeWrapped += fDeltaTime;
@@ -393,6 +399,8 @@ void CPlayer::Plant()
 
 	if (m_iBomb < 1)
 		return;
+
+	GET_SINGLE(CSoundManager)->Play("Plant");
 
 	CLayer* pLayer = GET_SINGLE(CSceneManager)->GetScene()->FindLayer("Stage");
 	CBomb* pBomb = CObj::CreateObj<CBomb>("Bomb", pLayer);
@@ -753,6 +761,8 @@ void CPlayer::HitStay(CCollider * pSrc, CCollider * pDest, float fDeltaTime)
 			pDestObj->Die();
 			AddRange(8);
 		}
+
+		GET_SINGLE(CSoundManager)->Play("Get");
 	}
 	else if (strDestObjTag == "Stream")
 	{
@@ -766,7 +776,8 @@ void CPlayer::HitStay(CCollider * pSrc, CCollider * pDest, float fDeltaTime)
 		if (m_bIsWrapped)
 		{
 			m_bIsDead = true;
-			//game end;
+			GET_SINGLE(CSoundManager)->Play("Die");
+			((CInGameScene*)(GET_SINGLE(CSceneManager)->GetScene()))->GameEnd(false);
 		}
 	}
 }

@@ -15,4 +15,7 @@ public:
 	virtual bool Init();
 	virtual int Update(float fDeltaTime);
 	virtual int LateUpdate(float fDeltaTime);
+
+public:
+	void GameEnd(bool bIsDraw);
 };

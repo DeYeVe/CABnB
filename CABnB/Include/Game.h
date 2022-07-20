@@ -4,6 +4,7 @@
 #include "pch.h"
 
 using namespace std;
+using namespace FMOD;
 
 #include "resource.h"
 #include "Macro.h"
@@ -12,10 +13,13 @@ using namespace std;
 
 #pragma comment(lib, "msimg32")
 
+#pragma comment(lib, "fmod_vc")
+
 // Path Key
 #define ROOT_PATH		"RootPath"
 #define TEXTURE_PATH	"TexturePath"
 #define DATA_PATH		"DataPath"
+#define SOUND_PATH		"SoundPath"
 
 template <typename T>
 void Safe_Delete_VecList(T& p)

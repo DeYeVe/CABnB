@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "../Collider/CollisionManager.h"
 #include "../Object/Mouse.h"
+#include "../Sound/SoundManager.h"
 
 CCore* CCore::m_pInst = NULL;
 bool CCore::m_bLoop = true;
@@ -28,12 +29,14 @@ CCore::CCore()
 CCore::~CCore()
 {
 	DESTROY_SINGLE(CSceneManager);
+	DESTROY_SINGLE(CSoundManager);
 	DESTROY_SINGLE(CCollisionManager);
 	DESTROY_SINGLE(CInput);
 	DESTROY_SINGLE(CCamera);
 	DESTROY_SINGLE(CResourcesManager);
 	DESTROY_SINGLE(CPathManager);
 	DESTROY_SINGLE(CTimer);
+	DESTROY_SINGLE(CSoundManager);
 
 	ReleaseDC(m_hWnd, m_hDC);
 
@@ -79,6 +82,13 @@ bool CCore::Init(HINSTANCE hInst)
 		m_tRS, RESOLUTION(1500, 1200)))
 		return false;
 
+	// 사운드 관리자 초기화
+	if (!GET_SINGLE(CSoundManager)->Init())
+		return false;
+
+	GET_SINGLE(CSoundManager)->LoadSound("StartScene", true, "bg/StartScene.mp3");
+	GET_SINGLE(CSoundManager)->Play("StartScene");
+	
 	// 장면관리자 초기화
 	if (!GET_SINGLE(CSceneManager)->Init())
 		return false;

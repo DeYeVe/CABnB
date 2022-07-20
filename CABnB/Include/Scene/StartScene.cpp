@@ -8,6 +8,7 @@
 #include "SceneManager.h"
 #include "RoomScene.h"
 #include "MapEditScene.h"
+#include "../Sound/SoundManager.h"
 
 CStartScene::CStartScene()
 {
@@ -96,6 +97,9 @@ bool CStartScene::Init()
 
 void CStartScene::StartButtonCallback(float fTime, const string & strTag)
 {
+	GET_SINGLE(CSoundManager)->Stop(ST_BGM);
+	GET_SINGLE(CSoundManager)->LoadSound("RoomScene", true, "bg/RoomScene.mp3");
+	GET_SINGLE(CSoundManager)->Play("RoomScene");
 	GET_SINGLE(CSceneManager)->CreateScene<CRoomScene>(SC_NEXT);
 }
 
@@ -106,5 +110,8 @@ void CStartScene::EndButtonCallback(float fTime, const string& strTag)
 
 void CStartScene::EditButtonCallback(float fTime, const string& strTag)
 {
+	GET_SINGLE(CSoundManager)->Stop(ST_BGM);
+	GET_SINGLE(CSoundManager)->LoadSound("MapEditScene", true, "bg/MapEditScene.mp3");
+	GET_SINGLE(CSoundManager)->Play("MapEditScene");
 	GET_SINGLE(CSceneManager)->CreateScene<CMapEditScene>(SC_NEXT);
 }

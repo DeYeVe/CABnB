@@ -9,6 +9,7 @@
 #include "../Core/PathManager.h"
 #include "InGameScene.h"
 #include "../Resources/ResourcesManager.h"
+#include "../Sound/SoundManager.h"
 
 CRoomScene::CRoomScene()
 {
@@ -76,6 +77,11 @@ bool CRoomScene::Init()
 
 void CRoomScene::RoomStartButtonCallback(float fTime, const string& strTag)
 {
+	GET_SINGLE(CSoundManager)->Stop(ST_BGM);
+	GET_SINGLE(CSoundManager)->LoadSound("InGameScene", true, "bg/Village.mp3");
+	GET_SINGLE(CSoundManager)->Play("InGameScene");
+	GET_SINGLE(CSoundManager)->LoadSound("Start", false, "system/start.wav");
+	GET_SINGLE(CSoundManager)->Play("Start");
 	GET_SINGLE(CSceneManager)->CreateScene<CInGameScene>(SC_NEXT);
 }
 

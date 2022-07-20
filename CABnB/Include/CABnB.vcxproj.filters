@@ -73,6 +73,9 @@
     <Filter Include="03. Object\02. Bomb">
       <UniqueIdentifier>{acd58948-c04a-4097-a20d-d1c24d3c8208}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Core\06. Sound">
+      <UniqueIdentifier>{002ef52e-56b2-43e9-b94a-8d12d181e445}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -179,6 +182,9 @@
     </ClCompile>
     <ClCompile Include="Object\Stream.cpp">
       <Filter>03. Object\02. Bomb</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\SoundManager.cpp">
+      <Filter>01. Core\06. Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +307,9 @@
     </ClInclude>
     <ClInclude Include="Object\Stream.h">
       <Filter>03. Object\02. Bomb</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\SoundManager.h">
+      <Filter>01. Core\06. Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
