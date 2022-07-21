@@ -7,6 +7,10 @@ class CInGameScene :
 private:
 	friend class CSceneManager;
 
+private:
+	class CUITimer* pInGameTimer;
+	bool			m_bEnd;
+
 public:
 	CInGameScene();
 	~CInGameScene();

@@ -178,7 +178,9 @@
     <ClCompile Include="Object\Tile.cpp" />
     <ClCompile Include="Object\UI.cpp" />
     <ClCompile Include="Object\UIButton.cpp" />
+    <ClCompile Include="Object\UIMessage.cpp" />
     <ClCompile Include="Object\UIPanel.cpp" />
+    <ClCompile Include="Object\UITimer.cpp" />
     <ClCompile Include="Resources\ResourcesManager.cpp" />
     <ClCompile Include="Resources\Texture.cpp" />
     <ClCompile Include="Scene\InGameScene.cpp" />
@@ -218,7 +220,9 @@
     <ClInclude Include="Object\Tile.h" />
     <ClInclude Include="Object\UI.h" />
     <ClInclude Include="Object\UIButton.h" />
+    <ClInclude Include="Object\UIMessage.h" />
     <ClInclude Include="Object\UIPanel.h" />
+    <ClInclude Include="Object\UITimer.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resources\ResourcesManager.h" />

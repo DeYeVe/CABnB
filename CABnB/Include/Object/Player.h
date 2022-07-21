@@ -107,15 +107,6 @@ public:
 	virtual void Render(HDC hDC, float fDeltaTime);
 	virtual CPlayer* Clone();
 
-private:
-	wstring StringToWstring(string str)
-	{
-		wstring wstr;
-		wstr = wstring(str.begin(), str.end());
-
-		return wstr;
-	}
-
 public:
 	void Move(float x, float y, float fDeltaTime);
 	void Plant();
@@ -124,5 +115,14 @@ public:
 public:
 	void Hit(CCollider * pSrc, CCollider * pDest, float fDeltaTime);
 	void HitStay(CCollider * pSrc, CCollider * pDest, float fDeltaTime);
+	
+private:
+	wstring StringToWstring(string str)
+	{
+		wstring wstr;
+		wstr = wstring(str.begin(), str.end());
+
+		return wstr;
+	}
 };
 

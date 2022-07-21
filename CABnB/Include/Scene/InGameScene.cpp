@@ -13,6 +13,8 @@
 #include "../Core/PathManager.h"
 #include "../Object/UIPanel.h"
 #include "../Object/UIButton.h"
+#include "../Object/UIMessage.h"
+#include "../Object/UITimer.h"
 #include "../Object/Tile.h"
 #include "../Object/Block.h"
 #include "../Object/Player.h"
@@ -31,8 +33,19 @@ bool CInGameScene::Init()
 	if (!CScene::Init())
 		return false;
 
-	//// UI
+	m_bEnd = false;
 
+	//// UI
+	CLayer* pUILayer = FindLayer("HUD");
+	CUIMessage* pMessage = CObj::CreateObj<CUIMessage>("Message", pUILayer);
+	pMessage->SetSize(382.f, 78.f);
+	pMessage->SetTexture("Start", L"UI/start.bmp");
+	pMessage->SetColorKey(255, 0, 255);
+	pMessage->SetPos(321.f - 191.f, -78.f);
+
+	CUITimer* pTimer = CObj::CreateObj<CUITimer>("Timer", pUILayer);
+	pInGameTimer = pTimer;
+		
 	//// Frame
 	CLayer* pFrameLayer = FindLayer("Frame");
 
@@ -82,6 +95,15 @@ int CInGameScene::Update(float fDeltaTime)
 {
 	CScene::Update(fDeltaTime);
 
+	if (m_bEnd)
+		return 0;
+
+	if (pInGameTimer->GetInGameTime() < 0.f)
+	{
+		GameEnd(true);
+		m_bEnd = true;
+	}
+
 	return 0;
 }
 
@@ -100,11 +122,25 @@ void CInGameScene::GameEnd(bool bIsDraw)
 		GET_SINGLE(CSoundManager)->LoadSound("Draw", false, "system/draw.wav");
 		GET_SINGLE(CSoundManager)->Play("Draw");
 
+		CLayer* pUILayer = FindLayer("HUD");
+		CUIMessage* pMessage = CObj::CreateObj<CUIMessage>("Message", pUILayer);
+		pMessage->SetSize(382.f, 79.f);
+		pMessage->SetTexture("Draw", L"UI/draw.bmp");
+		pMessage->SetColorKey(255, 0, 255);
+		pMessage->SetPos(321.f - 191.f, -79.f);
+
 	}
 	else
 	{
 		GET_SINGLE(CSoundManager)->Stop(ST_BGM);
 		GET_SINGLE(CSoundManager)->LoadSound("Win", false, "system/win.wav");
 		GET_SINGLE(CSoundManager)->Play("Win");
+
+		CLayer* pUILayer = FindLayer("HUD");
+		CUIMessage* pMessage = CObj::CreateObj<CUIMessage>("Message", pUILayer);
+		pMessage->SetSize(278, 79.f);
+		pMessage->SetTexture("Win", L"UI/win.bmp");
+		pMessage->SetColorKey(255, 0, 255);
+		pMessage->SetPos(321.f - 139.f, -79.f);
 	}
 }
